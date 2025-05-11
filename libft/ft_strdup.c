@@ -3,39 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 17:25:33 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/28 20:53:49 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:05:44 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:05:46 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *str)
 {
-	char	*dst;
-	int		i;
-	int		size;
-	int		len;
+	size_t	len;
+	char	*new_str;
 
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	if (s == 0)
-		return (0);
-	size = len + 1;
-	dst = malloc(size * sizeof(char));
-	if (dst == 0)
-		return (0);
-	i = 0;
-	while (s[i] != '\0')
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
+	len = ft_strlen(str) + 1;
+	new_str = (char *)malloc(len * sizeof(char));
+	if (new_str == NULL)
+		return (NULL);
+	return (ft_memcpy(new_str, str, len));
 }

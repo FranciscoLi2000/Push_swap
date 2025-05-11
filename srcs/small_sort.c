@@ -5,102 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 00:15:32 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 10:13:40 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 16:07:43 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:28:20 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
-void	sort_two(t_stack *stack)
+void	sort_two(t_stack *a)
 {
-	if (stack->numbers[0] > stack->numbers[1])
-		sa(stack);
+	if (a->numbers[0] > a->numbers[1])
+		sa(a);
 }
 
-void	sort_three(t_stack *stack)
+void	sort_three(t_stack *a)
 {
-	int	a;
-	int	b;
-	int	c;
-
-	a = stack->numbers[0];
-	b = stack->numbers[1];
-	c = stack->numbers[2];
-	if (a > b && b < c && a < c)
-		sa(stack);
-	else if (a > b && b > c)
+	if (a->numbers[0] > a->numbers[1] && a->numbers[1] < a->numbers[2]
+		&& a->numbers[0] < a->numbers[2])
+		sa(a);
+	else if (a->numbers[0] > a->numbers[1] && a->numbers[1] > a->numbers[2])
 	{
-		sa(stack);
-		rra(stack);
+		sa(a);
+		rra(a);
 	}
-	else if (a > b && b < c && a > c)
-		ra(stack);
-	else if (a < b && b > c && a < c)
+	else if (a->numbers[0] > a->numbers[1] && a->numbers[1] < a->numbers[2]
+		&& a->numbers[0] > a->numbers[2])
+		ra(a);
+	else if (a->numbers[0] < a->numbers[1] && a->numbers[1] > a->numbers[2]
+		&& a->numbers[0] < a->numbers[2])
 	{
-		sa(stack);
-		ra(stack);
+		sa(a);
+		ra(a);
 	}
-	else if (a < b && b > c && a > c)
-		rra(stack);
+	else if (a->numbers[0] < a->numbers[1] && a->numbers[1] > a->numbers[2]
+		&& a->numbers[0] > a->numbers[2])
+		rra(a);
 }
 
-static int	find_min_index(t_stack *stack)
+void	small_sort(t_stack *a, t_stack *b)
 {
-	int	min;
-	int	min_index;
-	int	i;
-
-	min = stack->numbers[0];
-	min_index = 0;
-	i = 1;
-	while (i < stack->size)
+	(void)b;
+	if (a->size <= 1)
+		return ;
+	if (a->size == 2)
 	{
-		if (stack->numbers[i] < min)
-		{
-			min = stack->numbers[i];
-			min_index = i;
-		}
-		i++;
+		if (a->numbers[0] > a->numbers[1])
+			sa(a);
+		return ;
 	}
-	return (min_index);
-}
-
-static void	push_min_to_b(t_stack *stack_a, t_stack *stack_b)
-{
-	int	min_idx;
-
-	min_idx = find_min_index(stack_a);
-	if (min_idx <= stack_a->size / 2)
-	{
-		while (min_idx > 0)
-		{
-			ra(stack_a);
-			min_idx--;
-		}
-	}
-	else
-	{
-		while (min_idx < stack_a->size)
-		{
-			rra(stack_a);
-			min_idx++;
-		}
-	}
-	pb(stack_a, stack_b);
-}
-
-void	sort_five_or_less(t_stack *stack_a, t_stack *stack_b)
-{
-	int	push_count;
-
-	push_count = stack_a->size - 3;
-	while (push_count > 0)
-	{
-		push_min_to_b(stack_a, stack_b);
-		push_count--;
-	}
-	sort_three(stack_a);
-	while (stack_b->size > 0)
-		pa(stack_a, stack_b);
+	sort_three(a);
 }

@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/29 15:39:01 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 19:47:46 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:07:37 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:07:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	unsigned int	start;
-	unsigned int	end;
-	char			*result;
+	size_t	start;
+	size_t	end;
+	char	*trimmed;
 
 	if (!s1 || !set)
 		return (NULL);
 	start = 0;
-	while (s1[start] != '\0' && ft_strchr(set, s1[start]))
+	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
-	end = (unsigned int)ft_strlen(s1);
+	if (s1[start] == '\0')
+		return (ft_strdup(""));
+	end = ft_strlen(s1);
 	while (end > start && ft_strchr(set, s1[end - 1]))
 		end--;
-	result = malloc(end - start + 1);
-	if (!result)
+	trimmed = (char *)malloc((end - start + 1) * sizeof(char));
+	if (!trimmed)
 		return (NULL);
-	ft_strlcpy(result, &s1[start], end - start + 1);
-	return (result);
+	ft_strlcpy(trimmed, (char *)s1 + start, end - start + 1);
+	return (trimmed);
 }

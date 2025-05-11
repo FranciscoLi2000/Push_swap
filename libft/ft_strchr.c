@@ -3,23 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 12:50:09 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 20:14:17 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:05:36 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:05:40 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	while (*s != (char)c)
+	char	ch;
+
+	ch = (char)c;
+	while (*str != '\0')
 	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
+		if (*str == ch)
+			return ((char *)str);
+		str++;
 	}
-	return ((char *)s);
+	if (ch == '\0')
+		return ((char *)str);
+	return (NULL);
 }

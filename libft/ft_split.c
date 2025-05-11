@@ -3,102 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 11:37:00 by yufli             #+#    #+#             */
-/*   Updated: 2025/01/02 18:44:28 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 20:58:25 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:22:18 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
-char	**ft_split(char const *s, char c);
-
-static char	**allocate_substrings(char const *s, char c, int *count)
+static size_t	count_tokens(const char *str, char separator)
 {
-	char	**result;
-	int		i;
+	size_t	tokens;
+	bool	inside_token;
 
-	*count = 0;
-	i = 0;
-	while (s[i] != '\0')
+	tokens = 0;
+	inside_token = false;
+	while (*str)
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i] != '\0')
+		if (*str != separator && !inside_token)
 		{
-			(*count)++;
-			while (s[i] != '\0' && s[i] != c)
-				i++;
+			inside_token = true;
+			tokens++;
 		}
+		else if (*str == separator)
+			inside_token = false;
+		str++;
 	}
-	result = malloc((*count + 1) * sizeof(char *));
-	if (!result)
-		return (NULL);
-	return (result);
+	return (tokens);
 }
 
-static int	get_wordlen(const char *s, char c, int start)
-{
-	int	len;
-
-	len = 0;
-	while (s[start + len] != '\0' && s[start + len] != c)
-		len++;
-	return (len);
-}
-
-static int	store_substrings(char const *s, char c, char **result)
+static int	safe_malloc(char **strs, int position, size_t buffer)
 {
 	int	i;
-	int	j;
+
+	strs[position] = malloc(buffer);
+	if (!strs[position])
+	{
+		i = 0;
+		while (i < position)
+			free(strs[i++]);
+		free(strs);
+		return (1);
+	}
+	return (0);
+}
+
+static int	fill(char **strs, const char *str, char separator)
+{
+	size_t	i;
+	size_t	j;
+	size_t	start;
 
 	i = 0;
 	j = 0;
-	while (s[i] != '\0')
+	while (str[i])
 	{
-		while (s[i] == c)
+		while (str[i] == separator && str[i])
 			i++;
-		if (s[i] != '\0')
-		{
-			result[j] = ft_substr(s, i, get_wordlen(s, c, i));
-			if (!result[j])
-				return (j);
-			j++;
-			while (s[i] != '\0' && s[i] != c)
-				i++;
-		}
+		if (!str[i])
+			break ;
+		start = i;
+		while (str[i] != separator && str[i])
+			i++;
+		if (safe_malloc(strs, j, i - start + 1))
+			return (1);
+		ft_strlcpy(strs[j], (char *)&str[start], i - start + 1);
+		j++;
 	}
-	result[j] = NULL;
-	return (-1);
-}
-
-static void	free_split_memory(char **result, int j)
-{
-	while (j >= 0)
-	{
-		free(result[j]);
-		j--;
-	}
-	free(result);
+	return (0);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**result;
-	int		failed_index;
-	int		count;
+	size_t	tokens;
+	char	**words;
 
-	result = allocate_substrings(s, c, &count);
-	if (!s || !result)
+	if (!s)
 		return (NULL);
-	failed_index = store_substrings(s, c, result);
-	if (failed_index != -1)
-	{
-		free_split_memory(result, failed_index - 1);
+	tokens = count_tokens(s, c);
+	words = malloc((tokens + 1) * sizeof(char *));
+	if (!words)
 		return (NULL);
-	}
-	return (result);
+	words[tokens] = NULL;
+	if (fill(words, s, c) == 1)
+		return (NULL);
+	return (words);
 }

@@ -3,54 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/29 15:43:37 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 19:44:45 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 20:57:15 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 20:57:21 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_itoa(int n);
-
-unsigned int	num_len(int n)
+static int	count_digits(int n)
 {
-	int	len;
+	int	count;
 
 	if (n <= 0)
+		count = 1;
+	count = 0;
+	while (n != 0)
 	{
-		len = 1;
-		while (n)
-		{
-			n = n / 10;
-			len++;
-		}
+		n = n / 10;
+		count++;
 	}
-	else
-	{
-		len = 0;
-		while (n)
-		{
-			n = n / 10;
-			len++;
-		}
-	}
-	return (len);
+	return (count);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int nbr)
 {
 	char	*str;
 	long	num;
 	int		len;
 
-	len = num_len(n);
-	num = n;
-	str = malloc((len + 1) * sizeof(char));
-	if (str == NULL)
+	len = count_digits(nbr);
+	num = nbr;
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
 		return (NULL);
 	str[len] = '\0';
 	if (num < 0)
@@ -58,12 +44,10 @@ char	*ft_itoa(int n)
 		str[0] = '-';
 		num = -num;
 	}
-	if (num == 0)
-		str[0] = '0';
 	while (num > 0)
 	{
 		len--;
-		str[len] = num % 10 + '0';
+		str[len] = (num % 10) + '0';
 		num = num / 10;
 	}
 	return (str);

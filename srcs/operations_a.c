@@ -6,80 +6,80 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 23:46:01 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 10:11:32 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 19:13:21 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	sa(t_stack *stack_a)
+void	sa(t_stack *a)
 {
 	int	temp;
 
-	if (stack_a->size < 2)
+	if (a->size < 2)
 		return ;
-	temp = stack_a->numbers[0];
-	stack_a->numbers[0] = stack_a->numbers[1];
-	stack_a->numbers[1] = temp;
+	temp = a->numbers[0];
+	a->numbers[0] = a->numbers[1];
+	a->numbers[1] = temp;
 	ft_putstr_fd("sa\n", 1);
 }
 
-void	pa(t_stack *stack_a, t_stack *stack_b)
+void	pa(t_stack *a, t_stack *b)
 {
 	int	i;
 
-	if (stack_b->size == 0)
+	if (b->size == 0)
 		return ;
-	i = stack_a->size;
+	i = a->size;
 	while (i > 0)
 	{
-		stack_a->numbers[i] = stack_a->numbers[i - 1];
+		a->numbers[i] = a->numbers[i - 1];
 		i--;
 	}
-	stack_a->numbers[0] = stack_b->numbers[0];
-	stack_a->size++;
+	a->numbers[0] = b->numbers[0];
+	a->size++;
 	i = 0;
-	while (i < stack_b->size - 1)
+	while (i < b->size - 1)
 	{
-		stack_b->numbers[i] = stack_b->numbers[i + 1];
+		b->numbers[i] = b->numbers[i + 1];
 		i++;
 	}
-	stack_b->size--;
+	b->size--;
 	ft_putstr_fd("pa\n", 1);
 }
 
-void	ra(t_stack *stack_a)
+void	ra(t_stack *a)
 {
 	int	temp;
 	int	i;
 
-	if (stack_a->size < 2)
+	if (a->size < 2)
 		return ;
-	temp = stack_a->numbers[0];
+	temp = a->numbers[0];
 	i = 0;
-	while (i < stack_a->size - 1)
+	while (i < a->size - 1)
 	{
-		stack_a->numbers[i] = stack_a->numbers[i + 1];
+		a->numbers[i] = a->numbers[i + 1];
 		i++;
 	}
-	stack_a->numbers[stack_a->size - 1] = temp;
+	a->numbers[a->size - 1] = temp;
 	ft_putstr_fd("ra\n", 1);
 }
 
-void	rra(t_stack *stack_a)
+void	rra(t_stack *a)
 {
 	int	temp;
 	int	i;
 
-	if (stack_a->size < 2)
+	if (a->size < 2)
 		return ;
-	temp = stack_a->numbers[stack_a->size - 1];
-	i = stack_a->size - 1;
+	temp = a->numbers[a->size - 1];
+	i = a->size - 1;
 	while (i > 0)
 	{
-		stack_a->numbers[i] = stack_a->numbers[i - 1];
+		a->numbers[i] = a->numbers[i - 1];
 		i--;
 	}
-	stack_a->numbers[0] = temp;
+	a->numbers[0] = temp;
 	ft_putstr_fd("rra\n", 1);
 }

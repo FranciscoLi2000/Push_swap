@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 12:46:01 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/28 12:48:14 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:07:48 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:07:52 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
+
+int	ft_isupper(int c)
+{
+	if (c >= 65 && c <= 90)
+		return (1);
+	return (0);
+}
 
 int	ft_tolower(int c)
 {
-	if (c >= 65 && c <= 90)
-		c = c + 32;
+	if (ft_isupper(c) == 1)
+		return (c + 32);
 	return (c);
 }

@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 15:00:05 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 20:02:24 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:07:07 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:07:25 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, unsigned int len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	unsigned int	i;
-	unsigned int	j;
+	size_t	needle_len;
+	size_t	max_pos;
+	size_t	i;
 
-	if (*little == '\0')
-		return ((char *)big);
+	needle_len = ft_strlen(needle);
+	if (needle_len == 0)
+		return ((char *)haystack);
+	if (needle_len > len)
+		return (NULL);
+	max_pos = len - needle_len;
 	i = 0;
-	while (i < len && big[i] != '\0')
+	while (i <= max_pos)
 	{
-		j = 0;
-		while ((i + j) < len && big[i + j] == little[j])
-		{
-			if (little[j + 1] == '\0')
-				return ((char *)&big[i]);
-			j++;
-		}
+		if (haystack[i] == needle[0]
+			&& ft_strncmp(haystack + i, needle, needle_len) == 0)
+			return ((char *)(haystack + i));
 		i++;
 	}
 	return (NULL);

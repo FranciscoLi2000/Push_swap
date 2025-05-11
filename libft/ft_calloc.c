@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 17:59:36 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 20:06:18 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 20:56:35 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 20:56:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
-void	*ft_calloc(unsigned int nmemb, unsigned int size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned int	i;
-	void			*ptr;
+	size_t	total_size;
+	void	*ptr;
 
-	if (size != 0 && nmemb > (unsigned int)(-1) / size)
-		return (NULL);
-	ptr = malloc(nmemb * size);
-	if (ptr == NULL)
-		return (NULL);
-	i = 0;
-	while ((unsigned int)i < nmemb * size)
+	if (nmemb != 0 && size != 0)
 	{
-		((unsigned char *)ptr)[i] = 0;
-		i++;
+		if (nmemb > SIZE_MAX / size)
+		{
+			errno = ENOMEM;
+			return (NULL);
+		}
 	}
+	total_size = nmemb * size;
+	ptr = malloc(total_size);
+	if (ptr != NULL)
+		ft_memset(ptr, 0, total_size);
 	return (ptr);
 }

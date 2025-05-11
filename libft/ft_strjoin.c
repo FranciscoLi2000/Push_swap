@@ -3,40 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/29 15:37:03 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 19:46:18 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:06:01 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:06:03 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	int		s1_len;
-	int		s2_len;
-	int		i;
+	size_t	index;
+	size_t	all_size;
+	char	*result;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	str = malloc((s1_len + s2_len + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < s1_len + s2_len)
+	if (!s1 || !s2)
 	{
-		if (i < s1_len)
-			str[i] = s1[i];
+		if (s1)
+			return (ft_strdup(s1));
+		else if (s2)
+			return (ft_strdup(s2));
 		else
-			str[i] = s2[i - s1_len];
-		i++;
+			return (ft_strdup(""));
 	}
-	str[i] = '\0';
-	return (str);
+	all_size = ft_strlen(s1) + ft_strlen(s2);
+	result = (char *)malloc((all_size + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	index = 0;
+	while (*s1)
+		result[index++] = *s1++;
+	while (*s2)
+		result[index++] = *s2++;
+	result[index] = '\0';
+	return (result);
 }

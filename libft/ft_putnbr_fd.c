@@ -3,29 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/29 15:55:46 by yufli             #+#    #+#             */
-/*   Updated: 2025/01/02 19:05:15 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 20:58:11 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 20:58:15 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int nbr, int fd)
 {
-	if (n == -2147483648)
+	long	nbl;
+	char	c[10];
+	short	i;
+
+	nbl = nbr;
+	i = 0;
+	if (nbr == 0)
 	{
-		ft_putstr_fd("-2147483648", fd);
+		write(fd, "0", 1);
 		return ;
 	}
-	if (n < 0)
+	if (nbl < 0)
 	{
-		ft_putchar_fd('-', fd);
-		n = -n;
+		nbl *= -1;
+		write(fd, "-", 1);
 	}
-	if (n >= 10)
-		ft_putnbr_fd(n / 10, fd);
-	ft_putchar_fd(n % 10 + '0', fd);
+	while (nbl % 10)
+	{
+		c[i++] = (nbl % 10) + 48;
+		nbl /= 10;
+	}
+	while (i >= 0)
+		write(fd, &c[--i], 1);
 }

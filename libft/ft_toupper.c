@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 12:28:04 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/28 12:45:24 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:07:57 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/11 21:08:00 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
+
+int	ft_islower(int c)
+{
+	if (c >= 97 && c <= 122)
+		return (1);
+	return (0);
+}
 
 int	ft_toupper(int c)
 {
-	if (c >= 97 && c <= 122)
-		c = c - 32;
+	if (ft_islower(c) == 1)
+		return (c - 32);
 	return (c);
 }

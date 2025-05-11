@@ -6,75 +6,75 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:11:04 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 10:12:56 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 19:18:36 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	ss(t_stack *stack_a, t_stack *stack_b)
+void	ss(t_stack *a, t_stack *b)
 {
 	int	temp;
 
-	if (stack_a->size < 2 || stack_b->size < 2)
+	if (a->size < 2 || b->size < 2)
 		return ;
-	temp = stack_a->numbers[0];
-	stack_a->numbers[0] = stack_a->numbers[1];
-	stack_a->numbers[1] = temp;
-	temp = stack_b->numbers[0];
-	stack_b->numbers[0] = stack_b->numbers[1];
-	stack_b->numbers[1] = temp;
+	temp = a->numbers[0];
+	a->numbers[0] = a->numbers[1];
+	a->numbers[1] = temp;
+	temp = b->numbers[0];
+	b->numbers[0] = b->numbers[1];
+	b->numbers[1] = temp;
 	ft_putstr_fd("ss\n", 1);
 }
 
-void	rr(t_stack *stack_a, t_stack *stack_b)
+void	rr(t_stack *a, t_stack *b)
 {
 	int	temp;
 	int	i;
 
-	if (stack_a->size < 2 || stack_b->size < 2)
+	if (a->size < 2 || b->size < 2)
 		return ;
-	temp = stack_a->numbers[0];
+	temp = a->numbers[0];
 	i = 0;
-	while (i < stack_a->size - 1)
+	while (i < a->size - 1)
 	{
-		stack_a->numbers[i] = stack_a->numbers[i + 1];
+		a->numbers[i] = a->numbers[i + 1];
 		i++;
 	}
-	stack_a->numbers[stack_a->size - 1] = temp;
-	temp = stack_b->numbers[0];
+	a->numbers[a->size - 1] = temp;
+	temp = b->numbers[0];
 	i = 0;
-	while (i < stack_b->size - 1)
+	while (i < b->size - 1)
 	{
-		stack_b->numbers[i] = stack_b->numbers[i + 1];
+		b->numbers[i] = b->numbers[i + 1];
 		i++;
 	}
-	stack_b->numbers[stack_b->size - 1] = temp;
+	b->numbers[b->size - 1] = temp;
 	ft_putstr_fd("rr\n", 1);
 }
 
-void	rrr(t_stack *stack_a, t_stack *stack_b)
+void	rrr(t_stack *a, t_stack *b)
 {
 	int	temp;
 	int	i;
 
-	if (stack_a->size < 2 || stack_b->size < 2)
+	if (a->size < 2 || b->size < 2)
 		return ;
-	temp = stack_a->numbers[stack_a->size - 1];
-	i = stack_a->size - 1;
+	temp = a->numbers[a->size - 1];
+	i = a->size - 1;
 	while (i > 0)
 	{
-		stack_a->numbers[i] = stack_a->numbers[i - 1];
+		a->numbers[i] = a->numbers[i - 1];
 		i--;
 	}
-	stack_a->numbers[0] = temp;
-	temp = stack_b->numbers[stack_b->size - 1];
-	i = stack_b->size - 1;
+	a->numbers[0] = temp;
+	temp = b->numbers[b->size - 1];
+	i = b->size - 1;
 	while (i > 0)
 	{
-		stack_b->numbers[i] = stack_b->numbers[i - 1];
+		b->numbers[i] = b->numbers[i - 1];
 		i--;
 	}
-	stack_b->numbers[0] = temp;
+	b->numbers[0] = temp;
 	ft_putstr_fd("rrr\n", 1);
 }
