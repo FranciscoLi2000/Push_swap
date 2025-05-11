@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:15:32 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:24:31 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:13:40 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,38 @@ static int	find_min_index(t_stack *stack)
 	return (min_index);
 }
 
-void	sort_five_or_less(t_stack *stack_a, t_stack *stack_b)
+static void	push_min_to_b(t_stack *stack_a, t_stack *stack_b)
 {
 	int	min_idx;
+
+	min_idx = find_min_index(stack_a);
+	if (min_idx <= stack_a->size / 2)
+	{
+		while (min_idx > 0)
+		{
+			ra(stack_a);
+			min_idx--;
+		}
+	}
+	else
+	{
+		while (min_idx < stack_a->size)
+		{
+			rra(stack_a);
+			min_idx++;
+		}
+	}
+	pb(stack_a, stack_b);
+}
+
+void	sort_five_or_less(t_stack *stack_a, t_stack *stack_b)
+{
 	int	push_count;
 
 	push_count = stack_a->size - 3;
 	while (push_count > 0)
 	{
-		min_idx = find_min_index(stack_a);
-		if (min_idx <= stack_a->size / 2)
-		{
-			while (min_idx > 0)
-			{
-				ra(stack_a);
-				min_idx--;
-			}
-		}
-		else
-		{
-			while (min_idx < stack_a->size)
-			{
-				rra(stack_a);
-				min_idx++;
-			}
-		}
-		pb(stack_a, stack_b);
+		push_min_to_b(stack_a, stack_b);
 		push_count--;
 	}
 	sort_three(stack_a);

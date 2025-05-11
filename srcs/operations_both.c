@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:11:04 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:23:43 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:12:56 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ss(t_stack *stack_a, t_stack *stack_b)
 	temp = stack_b->numbers[0];
 	stack_b->numbers[0] = stack_b->numbers[1];
 	stack_b->numbers[1] = temp;
-	write(1, "ss\n", 3);
+	ft_putstr_fd("ss\n", 1);
 }
 
 void	rr(t_stack *stack_a, t_stack *stack_b)
@@ -50,7 +50,7 @@ void	rr(t_stack *stack_a, t_stack *stack_b)
 		i++;
 	}
 	stack_b->numbers[stack_b->size - 1] = temp;
-	write(1, "rr\n", 3);
+	ft_putstr_fd("rr\n", 1);
 }
 
 void	rrr(t_stack *stack_a, t_stack *stack_b)
@@ -76,5 +76,5 @@ void	rrr(t_stack *stack_a, t_stack *stack_b)
 		i--;
 	}
 	stack_b->numbers[0] = temp;
-	write(1, "rrr\n", 4);
+	ft_putstr_fd("rrr\n", 1);
 }

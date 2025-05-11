@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:02:42 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:22:48 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:12:15 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sb(t_stack *stack_b)
 	temp = stack_b->numbers[0];
 	stack_b->numbers[0] = stack_b->numbers[1];
 	stack_b->numbers[1] = temp;
-	write(1, "sb\n", 3);
+	ft_putstr_fd("sb\n", 1);
 }
 
 void	pb(t_stack *stack_a, t_stack *stack_b)
@@ -45,7 +45,7 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 		i++;
 	}
 	stack_a->size--;
-	write(1, "pb\n", 3);
+	ft_putstr_fd("pb\n", 1);
 }
 
 void	rb(t_stack *stack_b)
@@ -63,7 +63,7 @@ void	rb(t_stack *stack_b)
 		i++;
 	}
 	stack_b->numbers[stack_b->size - 1] = temp;
-	write(1, "rb\n", 3);
+	ft_putstr_fd("rb\n", 1);
 }
 
 void	rrb(t_stack *stack_b)
@@ -81,5 +81,5 @@ void	rrb(t_stack *stack_b)
 		i--;
 	}
 	stack_b->numbers[0] = temp;
-	write(1, "rrb\n", 4);
+	ft_putstr_fd("rrb\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:30:15 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:33:49 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:07:14 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 		free_stacks(&stack_a, &stack_b);
 		return (0);
 	}
-	if (!ft_is_sorted(&stack_a))
+	if (!is_sorted(&stack_a))
 		sort_stack(&stack_a, &stack_b);
 	free_stacks(&stack_a, &stack_b);
 	return (0);

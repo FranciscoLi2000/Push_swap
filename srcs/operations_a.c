@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 23:46:01 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:22:03 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:11:32 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sa(t_stack *stack_a)
 	temp = stack_a->numbers[0];
 	stack_a->numbers[0] = stack_a->numbers[1];
 	stack_a->numbers[1] = temp;
-	write(1, "sa\n", 3);
+	ft_putstr_fd("sa\n", 1);
 }
 
 void	pa(t_stack *stack_a, t_stack *stack_b)
@@ -45,7 +45,7 @@ void	pa(t_stack *stack_a, t_stack *stack_b)
 		i++;
 	}
 	stack_b->size--;
-	write(1, "pa\n", 3);
+	ft_putstr_fd("pa\n", 1);
 }
 
 void	ra(t_stack *stack_a)
@@ -63,7 +63,7 @@ void	ra(t_stack *stack_a)
 		i++;
 	}
 	stack_a->numbers[stack_a->size - 1] = temp;
-	write(1, "ra\n", 3);
+	ft_putstr_fd("ra\n", 1);
 }
 
 void	rra(t_stack *stack_a)
@@ -81,5 +81,5 @@ void	rra(t_stack *stack_a)
 		i--;
 	}
 	stack_a->numbers[0] = temp;
-	write(1, "rra\n", 4);
+	ft_putstr_fd("rra\n", 1);
 }

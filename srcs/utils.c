@@ -6,11 +6,25 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 02:29:56 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:30:29 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:15:37 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
+int	is_sorted(t_stack *stack)
+{
+	int	i;
+
+	i = 0;
+	while (i < stack->size - 1)
+	{
+		if (stack->numbers[i] > stack->numbers[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	is_valid_number(char *str)
 {
@@ -23,7 +37,7 @@ int	is_valid_number(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}
@@ -46,6 +60,8 @@ int	check_duplicates(t_stack *stack, int num, int index)
 
 void	sort_stack(t_stack *stack_a, t_stack *stack_b)
 {
+	if (is_sorted(stack_a))
+		return ;
 	if (stack_a->size <= 1)
 		return ;
 	else if (stack_a->size == 2)

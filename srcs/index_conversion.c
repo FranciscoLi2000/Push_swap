@@ -6,18 +6,18 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:22:14 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 02:32:22 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:14:57 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static int	*create_copy(t_stack *stack)
+int	*create_copy(t_stack *stack)
 {
 	int	*copy;
 	int	i;
 
-	copy = (int *)malloc(sizeof(int) * stack->size);
+	copy = (int *)ft_calloc(stack->size, sizeof(int));
 	if (!copy)
 		return (NULL);
 	i = 0;
@@ -27,6 +27,20 @@ static int	*create_copy(t_stack *stack)
 		i++;
 	}
 	return (copy);
+}
+
+int	find_index(int *sorted, int value, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (sorted[i] == value)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 static void	sort_array(int *array, int size)
@@ -51,20 +65,6 @@ static void	sort_array(int *array, int size)
 		}
 		i++;
 	}
-}
-
-static int	find_index(int *sorted, int value, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (sorted[i] == value)
-			return (i);
-		i++;
-	}
-	return (-1);
 }
 
 void	convert_to_indices(t_stack *stack)

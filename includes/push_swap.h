@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 23:37:53 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/11 04:29:50 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/11 10:18:55 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include "../libft/libft.h"
+# include <limits.h>
 
 typedef struct s_stack
 {
@@ -40,16 +41,18 @@ void	sort_two(t_stack *stack);
 void	sort_three(t_stack *stack);
 void	sort_five_or_less(t_stack *stack_a, t_stack *stack_b);
 void	radix_sort(t_stack *stack_a, t_stack *stack_b);
+
+/* 索引转换函数 */
 void	convert_to_indices(t_stack *stack);
+int		*create_copy(t_stack *stack);
+int		find_index(int *sorted, int value, int size);
 
 /* 辅助函数 */
 int		is_sorted(t_stack *stack);
+int		is_valid_number(char *str);
 int		check_duplicates(t_stack *stack, int num, int index);
 void	print_error(void);
 void	free_stacks(t_stack *stack_a, t_stack *stack_b);
 int		parse_arguments(int argc, char **argv, t_stack *a, t_stack *b);
-int		is_valid_number(char *str);
-int		*create_copy(t_stack *stack);
-int		find_index(int *sorted, int value, int size);
 
 #endif
