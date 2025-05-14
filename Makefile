@@ -28,12 +28,13 @@ SRCS		= big_sort.c \
 		sort_chunks.c \
 		stack_op_2.c
 
-OBJS		= $($(SRCS_DIR)/SRCS:.c=.o)
+OBJS		= $(addprefix $(SRCS_DIR)/, $(SRCS:.c=.o))
+DEPS		= $(OBJS:.o=.d)
 
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 CC		= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -MMD -MP
 INCLUDES	= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
 all: $(NAME)
@@ -43,19 +44,19 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(GREEN)Libft compiled successfully!$(RESET)"
 
-%.o: %.c
+$(SRCS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@echo "$(YELLOW)Compiling $<...$(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo "$(PURPLE)Relating object files...$(RESET)"
+	@echo "$(PURPLE)Linking object files...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
 clean:
 	@echo "$(RED)Removing object files...$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@rm -f $(OBJS)
+	@rm -f $(OBJS) $(DEPS)
 	@echo "$(GREEN)Object files removed.$(RESET)"
 
 fclean: clean
@@ -65,5 +66,7 @@ fclean: clean
 	@echo "$(GREEN)$(NAME) removed.$(RESET)"
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re
