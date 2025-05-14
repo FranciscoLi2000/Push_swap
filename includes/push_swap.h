@@ -150,6 +150,9 @@ void	sort_five(t_context *ctx);
 
 // Sort any number of elements
 void	sort(t_context *ctx);
+void	sort_radix(t_context *ctx);
+void	sort_chunks(t_context *ctx, int chunks);
+void	sort_insertion(t_context *ctx);
 
 /*
  * Utility functions
@@ -168,6 +171,10 @@ int		find_max(t_stack *stack);
 int		find_position(t_stack *stack, int value);
 
 // Calculate how many moves needed to bring a position to the top
+int		calculate_moves(int position, int stack_size);
+void	normalize_values(t_context *ctx);
+int		*create_sorted_array(t_context *ctx);
+bool	parse_single_arg(t_context *ctx, int argc, char **argv);
 int		calculate_moves(int position, int stack_size);
 
 #endif
