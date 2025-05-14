@@ -112,19 +112,17 @@ bool	is_valid_integer(const char *str)
 bool	has_duplicates(t_stack *stack)
 {
 	t_stack	*current;
-	t_stack	*check;
 
-	current = check;
-	while (current)
+	while (stack)
 	{
-		check = current->next;
-		while (check)
+		current = stack->next;
+		while (current)
 		{
-			if (current->value == check->value)
+			if (stack->value == current->value)
 				return (true);
-			check = check->next;
+			current = current->next;
 		}
-		current = current->next;
+		stack = stack->next;
 	}
 	return (false);
 }

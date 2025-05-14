@@ -26,9 +26,9 @@ void	sort_two(t_context *ctx)
  */
 void	sort_three(t_context *ctx)
 {
-	int	first;
-	int	second;
-	int	third;
+	int	a;
+	int	b;
+	int	c;
 
 	if (!ctx || ctx->size_a != 3)
 		return ;

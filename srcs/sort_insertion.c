@@ -16,12 +16,9 @@ void	sort_insertion(t_context *ctx)
 {
 	int	min_value;
 	int	min_pos;
-	int	size;
 
 	if (!ctx || ctx->size_a <= 1)
 		return ;
-	// Keep track of initial size
-	size = ctx->size_a;
 	// Phase 1: Move all elements to stack B in ascending order
 	while (ctx->stack_a)
 	{

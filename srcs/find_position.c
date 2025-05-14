@@ -57,4 +57,5 @@ int	find_position(t_stack *stack, int value)
 		stack = stack->next;
 		pos++;
 	}
+	return (0);
 }

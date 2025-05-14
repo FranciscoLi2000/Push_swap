@@ -9,6 +9,7 @@ static bool	has_chunk_elements(t_context *ctx, int *sorted, int chunk_start, int
 	t_stack	*temp;
 	int		i;
 
+	(void)sorted;
 	temp = ctx->stack_a;
 	while (temp)
 	{
@@ -50,6 +51,7 @@ static int	find_best_chunk_element(t_context *ctx, int *sorted, int chunk_start,
 	int		best_cost;
 	int		pos;
 	int		cost;
+	int		i;
 
 	best_pos = -1;
 	best_cost = INT_MAX;
@@ -97,6 +99,7 @@ static void	move_element_to_top(t_context *ctx, int pos)
 			op_ra(ctx, true);
 			i++;
 		}
+	}
 	else
 	{
 		// Element is in the second half, use rra
@@ -166,6 +169,7 @@ void	sort_chunks(t_context *ctx, int chunks)
 	int	c;
 	int	chunk_start;
 	int	chunk_end;
+	int	remaining;
 
 	if (!ctx || chunks <= 0 || ctx->size_a <= 1 || is_stack_sorted(ctx->stack_a))
 		return ;

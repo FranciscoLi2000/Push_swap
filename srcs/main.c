@@ -6,6 +6,7 @@
  */
 
 #include "push_swap.h"
+#include "libft.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -65,7 +66,7 @@ static char	**generate_args_from_array(int *array, int size)
 	if (!args)
 		return NULL;
 	// First argument is program name (placeholder)
-	args[0] = strdup("push_swap");
+	args[0] = ft_strdup("push_swap");
 	if (!args[0])
 	{
 		free(args);
@@ -75,7 +76,7 @@ static char	**generate_args_from_array(int *array, int size)
 	while (i < size)
 	{
 		sprintf(buffer, "%d", array[i]);
-		args[i + 1] = strdup(buffer);
+		args[i + 1] = ft_strdup(buffer);
 		if (!args[i + 1])
 		{
 			// Free all previously allocated memory
@@ -215,7 +216,7 @@ static void run_performance_tests(void)
     printf("\n========= PERFORMANCE TESTS =========\n");
     printf("Running %d tests for each size...\n\n", tests_per_size);
     
-    for (i = 0; i < sizeof(sizes) / sizeof(sizes[0]); i++)
+    for (i = 0; i < (int)(sizeof(sizes) / sizeof(sizes[0])); i++)
     {
         total_ops = 0;
         

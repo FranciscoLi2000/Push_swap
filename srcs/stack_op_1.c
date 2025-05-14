@@ -44,7 +44,7 @@ t_stack	*stack_pop(t_stack **stack)
 	t_stack	*top;
 
 	if (!stack || !*stack)
-		eturn (NULL);
+		return (NULL);
 	top = *stack;
 	*stack = (*stack)->next;
 	top->next = NULL;
