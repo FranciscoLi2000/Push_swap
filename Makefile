@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/13 19:22:58 by yufli             #+#    #+#              #
-#    Updated: 2025/05/13 19:30:35 by yufli            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 GREEN	= \033[0;32m
 YELLOW	= \033[0;33m
 RED	= \033[0;31m
@@ -22,23 +10,25 @@ SRCS_DIR	= srcs
 INCS_DIR	= includes
 LIBFT_DIR	= libft
 
-SRCS		= $(SRCS_DIR)/main.c \
-		$(SRCS_DIR)/utils.c \
-		$(SRCS_DIR)/parse_args.c \
-		$(SRCS_DIR)/parse_single_arg.c \
-		$(SRCS_DIR)/parse_multiple_args.c \
-		$(SRCS_DIR)/normalize.c \
-		$(SRCS_DIR)/operations_a.c \
-		$(SRCS_DIR)/operations_b.c \
-		$(SRCS_DIR)/operations_both.c \
-		$(SRCS_DIR)/find_utils.c \
-		$(SRCS_DIR)/small_sort.c \
-		$(SRCS_DIR)/five_sort.c \
-		$(SRCS_DIR)/chunk_sort_100.c \
-		$(SRCS_DIR)/chunk_sort_500.c \
-		$(SRCS_DIR)/execute_sort.c
+SRCS		= big_sort.c \
+		main.c \
+		print_stacks.c \
+		rotate.c \
+		sort_insertion.c \
+		swap.c \
+		create_sorted_array.c \
+		parse_arguments.c \
+		push.c \
+		small_sort.c \
+		stack_op_1.c \
+		utils.c \
+		find_position.c \
+		parse_single_arg.c \
+		reverse_rotate.c \
+		sort_chunks.c \
+		stack_op_2.c
 
-OBJS		= $(SRCS:.c=.o)
+OBJS		= $($(SRCS_DIR)/SRCS:.c=.o)
 
 LIBFT		= $(LIBFT_DIR)/libft.a
 

@@ -1,57 +1,173 @@
+/* 
+ * PUSH_SWAP DATA STRUCTURES
+ * 
+ * This implementation provides the core data structures and operations
+ * needed for the push_swap project - a program that sorts integers
+ * using two stacks and a limited set of operations.
+ */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include "../libft/libft.h"
+
+# include <stdlib.h>
+# include <unistd.h>
 # include <limits.h>
+# include <stdbool.h>
 
-typedef struct s_node
-{
-	int		value;      // 存储整数值
-	struct s_node	*prev;    // 前一个节点
-	struct s_node	*next;    // 后一个节点
-}	t_node;
-
+/*
+ * Stack node structure
+ * Each node contains an integer value and a pointer to the next node
+ */
 typedef struct s_stack
 {
-	t_node	*top;           // 栈顶指针
-	t_node	*bottom;        // 栈底指针
-	int	size;           // 栈的大小
+	int		value;
+	struct s_stack	*next;
 }	t_stack;
 
-void	execute_sort(t_stack *a, t_stack *b);  // 执行排序的主函数
-int		is_sorted(t_stack *a);                // 检查栈是否已排序
-int		clean_exit(t_stack *a, t_stack *b);    // 清理资源并正常退出
-int	error_exit(t_stack *a, t_stack *b);    // 错误处理并退出
+/*
+ * Operations counter structure
+ * Used to keep track of how many operations have been performed
+ */
+typedef struct s_counter
+{
+	int	sa;     // swap a
+	int	sb;     // swap b
+	int	ss;     // swap both
+	int	pa;     // push to a
+	int	pb;     // push to b
+	int	ra;     // rotate a
+	int	rb;     // rotate b
+	int	rr;     // rotate both
+	int	rra;    // reverse rotate a
+	int	rrb;    // reverse rotate b
+	int	rrr;    // reverse rotate both
+	int	total;  // total operations
+}	t_counter;
 
-void	init_stacks(t_stack **a, t_stack **b); // 初始化两个堆栈
-void	free_stacks(t_stack *a, t_stack *b);   // 释放堆栈内存
-void	free_split(char **split);              // 释放分割后的字符串数组
+/*
+ * Program context structure
+ * Centralizes all program data in one structure
+ */
+typedef struct s_context
+{
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+	t_counter	counter;
+	int			size_a;
+	int			size_b;
+	int			*sorted;    // Array of sorted values for reference
+	int			total_size; // Original size of stack_a
+	bool		debug;      // Flag for debug output mode
+}	t_context;
 
-int		parse_single_arg(char *str, t_stack *a, t_stack *b); // 解析单个字符串参数
-int		parse_multiple_args(int argc, char **argv, t_stack *a, t_stack *b); // 解析多个参数
-int		is_valid_number(char *str);           // 检查是否为有效数字
-long	ft_strtol(char *str);                 // 字符串转长整型(自定义实现)
-int		check_duplicate(t_stack *a, int num, int pos); // 检查是否有重复数字
+/*
+ * Stack operations prototypes
+ */
+t_stack	*stack_new_node(int value);	// Create a new node with the given value
+void	stack_push(t_stack **stack, t_stack *new_node);	// Add a node to the head of the stack
+t_stack	*stack_pop(t_stack **stack);	// Remove and return the top node from the stack
 
-void	sa(t_stack *a);       // 交换栈a顶部两个元素
-void	sb(t_stack *b);       // 交换栈b顶部两个元素
-void	ss(t_stack *a, t_stack *b); // 同时交换两个栈的顶部元素
-void	pa(t_stack *a, t_stack *b); // 从b栈顶推一个元素到a栈顶
-void	pb(t_stack *a, t_stack *b); // 从a栈顶推一个元素到b栈顶
-void	ra(t_stack *a);       // 旋转栈a(顶部元素移到底部)
-void	rb(t_stack *b);       // 旋转栈b(顶部元素移到底部)
-void	rr(t_stack *a, t_stack *b); // 同时旋转两个栈
-void	rra(t_stack *a);      // 反向旋转栈a(底部元素移到顶部)
-void	rrb(t_stack *b);      // 反向旋转栈b(底部元素移到顶部)
-void	rrr(t_stack *a, t_stack *b); // 同时反向旋转两个栈
+// Get the value of the node at the given position (0-indexed)
+int		stack_get(t_stack *stack, int position);
 
-void	small_sort(t_stack *a, t_stack *b);    // 小规模数据排序(2-3个元素)
-void	five_sort(t_stack *a, t_stack *b);     // 5个元素的排序
-void	chunk_sort_100(t_stack *a, t_stack *b); // 100个元素的分块排序
-void	chunk_sort_500(t_stack *a, t_stack *b); // 500个元素的分块排序
+t_stack	*stack_last(t_stack *stack);	// Get the last node in the stack
+int		stack_size(t_stack *stack);	// Get the size of the stack
+bool	is_stack_sorted(t_stack *stack);	// Check if the stack is sorted in ascending order
+void	stack_free(t_stack **stack);	// Free the entire stack
 
-void	normalize_stack(t_stack *a);           // 标准化栈中的值(可选)
-int		find_min_position(t_stack *a);         // 找到最小值的位置
-int		find_max_position(t_stack *b);         // 找到最大值的位置
-void	sort_three(t_stack *a);                // 专门排序3个元素的函数
+/*
+ * Push_swap operations prototypes
+ * These implement the required operations for the push_swap assignment
+ */
+// sa: Swap the first two elements of stack A
+void	op_sa(t_context *ctx, bool print);
+
+// sb: Swap the first two elements of stack B
+void	op_sb(t_context *ctx, bool print);
+
+// ss: sa and sb at the same time
+void	op_ss(t_context *ctx, bool print);
+
+// pa: Push the first element of stack B to stack A
+void	op_pa(t_context *ctx, bool print);
+
+// pb: Push the first element of stack A to stack B
+void	op_pb(t_context *ctx, bool print);
+
+// ra: Rotate stack A (first element becomes last)
+void	op_ra(t_context *ctx, bool print);
+
+// rb: Rotate stack B (first element becomes last)
+void	op_rb(t_context *ctx, bool print);
+
+// rr: ra and rb at the same time
+void	op_rr(t_context *ctx, bool print);
+
+// rra: Reverse rotate stack A (last element becomes first)
+void	op_rra(t_context *ctx, bool print);
+
+// rrb: Reverse rotate stack B (last element becomes first)
+void	op_rrb(t_context *ctx, bool print);
+
+// rrr: rra and rrb at the same time
+void	op_rrr(t_context *ctx, bool print);
+
+/*
+ * Context management functions
+ */
+// Initialize the program context
+t_context	*init_context(void);
+
+// Clean up and free all resources
+void	cleanup_context(t_context *ctx);
+
+/*
+ * Parser and validation functions
+ */
+// Parse command line arguments into stack A
+bool	parse_arguments(t_context *ctx, int argc, char **argv);
+
+// Check for duplicates in stack A
+bool	has_duplicates(t_stack *stack);
+
+// Check if a string is a valid integer
+bool	is_valid_integer(const char *str);
+
+// Print error message and exit
+void	error_exit(t_context *ctx);
+
+/*
+ * Algorithm functions (implementation will depend on your sorting strategy)
+ */
+// Sort 2 elements
+void	sort_two(t_context *ctx);
+
+// Sort 3 elements
+void	sort_three(t_context *ctx);
+
+// Sort 5 elements
+void	sort_five(t_context *ctx);
+
+// Sort any number of elements
+void	sort(t_context *ctx);
+
+/*
+ * Utility functions
+ */
+
+// Print current state of stacks (for debugging)
+void	print_stacks(t_context *ctx);
+
+// Find minimum value in stack
+int		find_min(t_stack *stack);
+
+// Find maximum value in stack
+int		find_max(t_stack *stack);
+
+// Find position of a value in stack
+int		find_position(t_stack *stack, int value);
+
+// Calculate how many moves needed to bring a position to the top
+int		calculate_moves(int position, int stack_size);
 
 #endif

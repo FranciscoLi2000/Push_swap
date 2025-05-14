@@ -2,48 +2,6 @@
 #include <stdio.h>
 
 /*
- * Create a sorted reference array
- * This helps determine the final position of each element
- */
-static int	*create_sorted_array(t_context *ctx)
-{
-	int		*arr;
-	int		i;
-	t_stack	*temp;
-
-	if (!ctx || ctx->size_a == 0)
-		return (NULL);
-	// Allocate array
-	arr = (int *)malloc(sizeof(int) * ctx->total_size);
-	if (!arr)
-		return (NULL);
-	// Copy values
-	temp = ctx->stack_a;
-	i = 0;
-	while (temp)
-	{
-		arr[i++] = temp->value;
-		temp = temp->next;
-	}
-	// Simple bubble sort (inefficient but simple)
-	i = 0;
-	while (i = 0; i < ctx->total_size - 1; i++)
-	{
-        for (int j = 0; j < ctx->total_size - i - 1; j++)
-        {
-            if (arr[j] > arr[j + 1])
-            {
-                int tmp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = tmp;
-            }
-        }
-    }
-
-    return (arr);
-}
-
-/*
  * Helper function: Replace actual values with their normalized indices
  * This converts the problem into sorting positions (0 to n-1)
  * instead of sorting actual values
@@ -128,43 +86,18 @@ void	sort(t_context *ctx)
 		return ;
 	// Special cases for small stacks
 	if (ctx->size_a == 2)
-	{
 		sort_two(ctx);
-		return ;
-	}
 	else if (ctx->size_a == 3)
-	{
 		sort_three(ctx);
-		return ;
-	}
 	else if (ctx->size_a <= 5)
-	{
 		sort_five(ctx);
-		return ;
-	}
-	// For small-medium stacks (6-20 elements)
 	else if (ctx->size_a <= 20)
-	{
 		sort_insertion(ctx);
-		return ;
-	}
-	// For medium stacks (21-60 elements)
 	else if (ctx->size_a <= 60)
-	{
 		sort_chunks(ctx, 3); // Using 3 chunks for this range
-		return ;
-	}
-	// For medium-large stacks (61-100 elements)
 	else if (ctx->size_a <= 100)
-	{
 		sort_chunks(ctx, 5); // Using 5 chunks for this range
-		return ;
-	}
-	// For large stacks (100+ elements)
 	else
-	{
-		// For very large inputs, use radix sort
 		sort_radix(ctx);
-		return ;
-	}
+	return ;
 }
