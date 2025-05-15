@@ -9,7 +9,6 @@
  */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 /*
  * Swap operation - swaps the top two elements of a stack
@@ -38,7 +37,6 @@ void	op_sa(t_context *ctx, bool print)
 	if (!ctx || !ctx->stack_a || !ctx->stack_a->next)
 		return ;
 	swap(&ctx->stack_a);
-	// Update operation counter
 	ctx->counter.sa++;
 	ctx->counter.total++;
 	if (print)
@@ -54,7 +52,6 @@ void	op_sb(t_context *ctx, bool print)
 	if (!ctx || !ctx->stack_b || !ctx->stack_b->next)
 		return ;
 	swap(&ctx->stack_b);
-	// Update operation counter
 	ctx->counter.sb++;
 	ctx->counter.total++;
 	if (print)
@@ -69,12 +66,10 @@ void	op_ss(t_context *ctx, bool print)
 {
 	if (!ctx)
 		return ;
-	// Perform the swaps without printing
 	if (ctx->stack_a && ctx->stack_a->next)
 		swap(&ctx->stack_a);
 	if (ctx->stack_b && ctx->stack_b->next)
 		swap(&ctx->stack_b);
-	// Update operation counter
 	ctx->counter.ss++;
 	ctx->counter.total++;
 	if (print)

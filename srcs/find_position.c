@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <stdio.h>
 
 /*
  * Find minimum value in stack
@@ -58,4 +57,16 @@ int	find_position(t_stack *stack, int value)
 		pos++;
 	}
 	return (0);
+}
+
+/**
+ * Calculate how many moves needed to bring a position to the top
+ * Returns the minimum number of moves (using rotate or reverse rotate)
+ */
+int	calculate_moves(int position, int stack_size)
+{
+	if (position <= stack_size / 2)
+		return (position);
+	else
+		return (stack_size - position);
 }

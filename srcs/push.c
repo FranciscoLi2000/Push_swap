@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <stdio.h>
 
 /*
  * pa: Push the first element of stack B to stack A
@@ -18,7 +17,6 @@ void	op_pa(t_context *ctx, bool print)
 		ctx->size_a++;
 		ctx->size_b--;
 	}
-	// Update operation counter
 	ctx->counter.pa++;
 	ctx->counter.total++;
 	if (print)
@@ -42,7 +40,6 @@ void	op_pb(t_context *ctx, bool print)
 		ctx->size_a--;
 		ctx->size_b++;
 	}
-	// Update operation counter
 	ctx->counter.pb++;
 	ctx->counter.total++;
 	if (print)

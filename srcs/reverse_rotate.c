@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <stdio.h>
 
 /*
  * Reverse rotate operation - shifts all elements of a stack down by 1
@@ -16,11 +15,10 @@ static void	reverse_rotate(t_stack **stack)
 		return ;
 	first = *stack;
 	last = stack_last(*stack);
-	// Find the second to last element
 	second_last = first;
 	while (second_last->next && second_last->next->next)
 		second_last = second_last->next;
-	if (second_last->next) // Safety check
+	if (second_last->next)
 	{
 		last = second_last->next;
 		second_last->next = NULL;
@@ -38,11 +36,10 @@ void	op_rra(t_context *ctx, bool print)
 	if (!ctx || !ctx->stack_a || !ctx->stack_a->next)
 		return ;
 	reverse_rotate(&ctx->stack_a);
-	// Update operation counter
 	ctx->counter.rra++;
 	ctx->counter.total++;
 	if (print)
-		write(1, "rra\n", 3);
+		write(1, "rra\n", 4);
 }
 
 /*
@@ -54,11 +51,10 @@ void	op_rrb(t_context *ctx, bool print)
 	if (!ctx || !ctx->stack_b || !ctx->stack_b->next)
 		return ;
 	reverse_rotate(&ctx->stack_b);
-	// Update operation counter
 	ctx->counter.rrb++;
 	ctx->counter.total++;
 	if (print)
-		write(1, "rrb\n", 3);
+		write(1, "rrb\n", 4);
 }
 
 /*
@@ -69,14 +65,12 @@ void	op_rrr(t_context *ctx, bool print)
 {
 	if (!ctx)
 		return ;
-	// Perform the reverse rotations without printing
 	if (ctx->stack_a && ctx->stack_a->next)
 		reverse_rotate(&ctx->stack_a);
 	if (ctx->stack_b && ctx->stack_b->next)
 		reverse_rotate(&ctx->stack_b);
-	// Update operation counter
 	ctx->counter.rrr++;
 	ctx->counter.total++;
 	if (print)
-		write(1, "rrr\n", 3);
+		write(1, "rrr\n", 4);
 }

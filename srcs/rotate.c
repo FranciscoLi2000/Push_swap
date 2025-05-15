@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <stdio.h>
 
 /*
  * Rotate operation - shifts all elements of a stack up by 1
@@ -44,7 +43,6 @@ void	op_rb(t_context *ctx, bool print)
 	if (!ctx || !ctx->stack_b || !ctx->stack_b->next)
 		return ;
 	rotate(&ctx->stack_b);
-	// Update operation counter
 	ctx->counter.rb++;
 	ctx->counter.total++;
 	if (print)
@@ -59,12 +57,10 @@ void	op_rr(t_context *ctx, bool print)
 {
 	if (!ctx)
 		return ;
-	// Perform the rotations without printing
 	if (ctx->stack_a && ctx->stack_a->next)
 		rotate(&ctx->stack_a);
 	if (ctx->stack_b && ctx->stack_b->next)
 		rotate(&ctx->stack_b);
-	// Update operation counter
 	ctx->counter.rr++;
 	ctx->counter.total++;
 	if (print)

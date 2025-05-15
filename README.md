@@ -1,48 +1,49 @@
 # Nivel 2: Algoritmos y Estructuras de Datos
 
-Push_swap: Algoritmos de ordenamiento y optimizacion.
+## Push_swap
 
-En este proyecto ordenarás datos en un stack, con un conjunto limitado de instrucciones, y utilizando el menor número posible de acciones. Para tener éxito, deberás probar a utilizar varios tipos de algoritmos y elegir la solución más apropiada (de entre muchas posibles) para conseguir la ordenación optimizada de los datos.
+### Project Description
 
-## Introducción
+Push_swap is a 42 School project about sorting algorithms and stack manipulation. The goal is to sort a stack of integers using a limited set of operations with the goal of using as few operations as possible.
 
-Push_swap es un proyecto de algoritmia simple y muy efectivo: tienes que ordenar datos.
+Compilation
+	`make`
 
-Tienes a tu disposición un conjunto de valores enteros, 2 stacks y un conjunto de instrucciones para manipular ambos stacks.
+### Usage to test
 
-¿Cuál es tu objetivo? Escribir un programa en C llamado push_swap. El programa calculará y mostrará en la salida estándar el programa más pequeño, creado con las instrucciones de lenguaje Push swap, que ordene los números enteros recibidos como argumentos.
+./push_swap 2 1 3 6 5 8
 
-## Objetivos
+./push_swap "2 1 3 6 5 8"
 
-Escribir un algoritmo de ordenamiento es un paso crucial en el viaje de un desarrollador. Normalmente es el primer encuentro con el concepto de complejidad.
+ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_linux $ARG
 
-Los algoritmos de ordenamiento y su complejidad suponen una parte importante de las preguntas realizadas durante las entrevistas laborales. Es posiblemente un buen momento para echar un vistazo a estos conceptos ya que tendrás que enfrentarte a ellos en algún momento de tu vida.
+### Available Operations
 
-Los objetivos de aprendizaje de este proyecto son rigor, uso de C, y el uso de algoritmos básicos... haciendo especial hincapié en su complejidad
+sa: swap a - swap the first 2 elements at the top of stack a
+sb: swap b - swap the first 2 elements at the top of stack b
+ss: sa and sb at the same time
+pa: push a - take the first element at the top of b and put it at the top of a
+pb: push b - take the first element at the top of a and put it at the top of b
+ra: rotate a - shift up all elements of stack a by 1
+rb: rotate b - shift up all elements of stack b by 1
+rr: ra and rb at the same time
+rra: reverse rotate a - shift down all elements of stack a by 1
+rrb: reverse rotate b - shift down all elements of stack b by 1
+rrr: rra and rrb at the same time
 
-Ordenar valores es simple. Ordenarlos de forma rápida es menos simple, especialmente porque de una configuración de enteros a otra, la solución más eficiente para ordenar, puede diferir.
+### Algorithm
 
-## 项目概述
+The sorting strategy depends on the number of elements:
 
-Push_swap 是一个涉及栈排序的算法项目，目标是用最少的操作将一组随机整数排序。
-我们有两个栈（A和B）和一系列限定的操作来操作这些栈。
+For 2 elements: simple comparison and swap if needed
+For 3 elements: optimized algorithm with a maximum of 2 operations
+For 4-5 elements: push smallest elements to stack B, sort remaining 3, then push back
+For 6-20 elements: insertion sort algorithm
+For 21-60 elements: chunk sort with 3 chunks
+For 61-100 elements: chunk sort with 5 chunks
+For 100+ elements: radix sort using binary representation
 
-### 主要目标
+### Performance
 
-实现一个名为 push_swap 的程序，它能够用最少的指令将整数排序
-	对于100个随机数，操作次数需少于700次
-	对于500个随机数，操作次数需少于5500次
-
-### 允许的操作
-
-sa：交换栈A顶部的两个元素
-sb：交换栈B顶部的两个元素
-ss：同时执行sa和sb
-pa：将栈B顶部元素移到栈A顶部
-pb：将栈A顶部元素移到栈B顶部
-ra：将栈A顶部元素移到栈A底部
-rb：将栈B顶部元素移到栈B底部
-rr：同时执行ra和rb
-rra：将栈A底部元素移到栈A顶部
-rrb：将栈B底部元素移到栈B顶部
-rrr：同时执行rra和rrb
+For 100 random integers: less than 700 operations
+For 500 random integers: less than 5500 operations

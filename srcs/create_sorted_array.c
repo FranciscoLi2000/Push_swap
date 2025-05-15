@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include  <stdio.h>
 
 /*
  * Helper function for quicksort implementation
@@ -66,11 +65,9 @@ int	*create_sorted_array(t_context *ctx)
 
 	if (!ctx || ctx->size_a == 0)
 		return (NULL);
-	// Allocate memory for the array
 	arr = (int *)malloc(sizeof(int) * ctx->total_size);
 	if (!arr)
 		return (NULL);
-	// Copy values from stack A to the array
 	temp = ctx->stack_a;
 	i = 0;
 	while (temp)
@@ -78,7 +75,35 @@ int	*create_sorted_array(t_context *ctx)
 		arr[i++] = temp->value;
 		temp = temp->next;
 	}
-	// Sort the array using quicksort
 	quick_sort(arr, 0, ctx->total_size - 1);
 	return (arr);
+}
+
+/**
+ * Replace actual values with their normalized positions
+ * This converts the problem into sorting positions (0 to n-1)
+ * instead of sorting actual values
+ */
+void	normalize_values(t_context *ctx, int *sorted)
+{
+	int		i;
+	t_stack	*temp;
+
+	if (!ctx || !sorted)
+		return ;
+	temp = ctx->stack_a;
+	while (temp)
+	{
+		i = 0;
+		while (i < ctx->total_size)
+		{
+			if (temp->value == sorted[i])
+			{
+				temp->value = i;
+				break ;
+			}
+			i++;
+		}
+		temp = temp->next;
+	}
 }

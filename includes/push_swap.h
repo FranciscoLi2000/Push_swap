@@ -13,6 +13,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdbool.h>
+# include "libft.h"
 
 /*
  * Stack node structure
@@ -50,8 +51,8 @@ typedef struct s_counter
  */
 typedef struct s_context
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	t_stack		*stack_a;
+	t_stack		*stack_b;
 	t_counter	counter;
 	int			size_a;
 	int			size_b;
@@ -63,53 +64,28 @@ typedef struct s_context
 /*
  * Stack operations prototypes
  */
-t_stack	*stack_new_node(int value);	// Create a new node with the given value
-void	stack_push(t_stack **stack, t_stack *new_node);	// Add a node to the head of the stack
-t_stack	*stack_pop(t_stack **stack);	// Remove and return the top node from the stack
-
-// Get the value of the node at the given position (0-indexed)
+t_stack	*stack_new_node(int value);
+void	stack_push(t_stack **stack, t_stack *new_node);
+t_stack	*stack_pop(t_stack **stack);
 int		stack_get(t_stack *stack, int position);
-
-t_stack	*stack_last(t_stack *stack);	// Get the last node in the stack
-int		stack_size(t_stack *stack);	// Get the size of the stack
-bool	is_stack_sorted(t_stack *stack);	// Check if the stack is sorted in ascending order
-void	stack_free(t_stack **stack);	// Free the entire stack
+t_stack	*stack_last(t_stack *stack);
+int		stack_size(t_stack *stack);
+bool	is_stack_sorted(t_stack *stack);
+void	stack_free(t_stack **stack);
 
 /*
  * Push_swap operations prototypes
- * These implement the required operations for the push_swap assignment
  */
-// sa: Swap the first two elements of stack A
 void	op_sa(t_context *ctx, bool print);
-
-// sb: Swap the first two elements of stack B
 void	op_sb(t_context *ctx, bool print);
-
-// ss: sa and sb at the same time
 void	op_ss(t_context *ctx, bool print);
-
-// pa: Push the first element of stack B to stack A
 void	op_pa(t_context *ctx, bool print);
-
-// pb: Push the first element of stack A to stack B
 void	op_pb(t_context *ctx, bool print);
-
-// ra: Rotate stack A (first element becomes last)
 void	op_ra(t_context *ctx, bool print);
-
-// rb: Rotate stack B (first element becomes last)
 void	op_rb(t_context *ctx, bool print);
-
-// rr: ra and rb at the same time
 void	op_rr(t_context *ctx, bool print);
-
-// rra: Reverse rotate stack A (last element becomes first)
 void	op_rra(t_context *ctx, bool print);
-
-// rrb: Reverse rotate stack B (last element becomes first)
 void	op_rrb(t_context *ctx, bool print);
-
-// rrr: rra and rrb at the same time
 void	op_rrr(t_context *ctx, bool print);
 
 /*
@@ -124,57 +100,35 @@ void	cleanup_context(t_context *ctx);
 /*
  * Parser and validation functions
  */
-// Parse command line arguments into stack A
-bool	parse_arguments(t_context *ctx, int argc, char **argv);
-
-// Check for duplicates in stack A
-bool	has_duplicates(t_stack *stack);
-
-// Check if a string is a valid integer
-bool	is_valid_integer(const char *str);
-
-// Print error message and exit
-void	error_exit(t_context *ctx);
+bool		parse_arguments(t_context *ctx, int argc, char **argv);
+bool		parse_single_arg(t_context *ctx, int argc, char **argv);
+bool		has_duplicates(t_stack *stack);
+bool		is_valid_integer(const char *str);
+void		error_exit(t_context *ctx);
 
 /*
- * Algorithm functions (implementation will depend on your sorting strategy)
+ * Sorting algorithms
  */
-// Sort 2 elements
-void	sort_two(t_context *ctx);
-
-// Sort 3 elements
-void	sort_three(t_context *ctx);
-
-// Sort 5 elements
-void	sort_five(t_context *ctx);
-
-// Sort any number of elements
-void	sort(t_context *ctx);
-void	sort_radix(t_context *ctx);
-void	sort_chunks(t_context *ctx, int chunks);
-void	sort_insertion(t_context *ctx);
+void		sort_two(t_context *ctx);
+void		sort_three(t_context *ctx);
+void		sort_five(t_context *ctx);
+void		sort_insertion(t_context *ctx);
+void		sort_chunks(t_context *ctx, int chunks);
+void		sort_radix(t_context *ctx);
+void		sort(t_context *ctx);
 
 /*
  * Utility functions
  */
-
-// Print current state of stacks (for debugging)
-void	print_stacks(t_context *ctx);
-
-// Find minimum value in stack
-int		find_min(t_stack *stack);
-
-// Find maximum value in stack
-int		find_max(t_stack *stack);
-
-// Find position of a value in stack
-int		find_position(t_stack *stack, int value);
-
-// Calculate how many moves needed to bring a position to the top
-int		calculate_moves(int position, int stack_size);
-void	normalize_values(t_context *ctx);
-int		*create_sorted_array(t_context *ctx);
-bool	parse_single_arg(t_context *ctx, int argc, char **argv);
-int		calculate_moves(int position, int stack_size);
+void		print_stacks(t_context *ctx);
+int			find_min(t_stack *stack);
+int			find_max(t_stack *stack);
+int			find_position(t_stack *stack, int value);
+int			calculate_moves(int position, int stack_size);
+int			*create_sorted_array(t_context *ctx);
+void		normalize_values(t_context *ctx, int *sorted);
+bool		has_chunk_elements(t_context *ctx, int *sorted, int start, int end);
+int			find_best_chunk_element(t_context *ctx, int *sorted, int start, int end);
+void		move_element_to_top(t_context *ctx, int pos);
 
 #endif

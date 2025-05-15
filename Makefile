@@ -9,6 +9,7 @@ NAME		= push_swap
 SRCS_DIR	= srcs
 INCS_DIR	= includes
 LIBFT_DIR	= libft
+OBJS_DIR	= objs
 
 SRCS		= big_sort.c \
 		main.c \
@@ -28,7 +29,7 @@ SRCS		= big_sort.c \
 		sort_chunks.c \
 		stack_op_2.c
 
-OBJS		= $(addprefix $(SRCS_DIR)/, $(SRCS:.c=.o))
+OBJS		= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 DEPS		= $(OBJS:.o=.d)
 
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -39,12 +40,15 @@ INCLUDES	= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
 all: $(NAME)
 
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
 $(LIBFT):
 	@echo "$(BLUE)Compiling libft...$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(GREEN)Libft compiled successfully!$(RESET)"
 
-$(SRCS_DIR)/%.o: $(SRCS_DIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@echo "$(YELLOW)Compiling $<...$(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -56,11 +60,11 @@ $(NAME): $(LIBFT) $(OBJS)
 clean:
 	@echo "$(RED)Removing object files...$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@rm -f $(OBJS) $(DEPS)
+	@rm -rf $(OBJS_DIR)
 	@echo "$(GREEN)Object files removed.$(RESET)"
 
 fclean: clean
-	@echo "$(RED)Removing executed program...$(RESET)"
+	@echo "$(RED)Removing executed programs...$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@rm -f $(NAME)
 	@echo "$(GREEN)$(NAME) removed.$(RESET)"

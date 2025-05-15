@@ -1,5 +1,22 @@
 #include "push_swap.h"
-#include <stdio.h>
+
+/**
+ * Move the element at position 'pos' to the top of stack A
+ * Uses the optimal rotation direction (ra or rra)
+ */
+void	move_element_to_top(t_context *ctx, int pos)
+{
+	if (pos <= ctx->size_a / 2)
+	{
+		while (pos-- > 0)
+			op_ra(ctx, true);
+	}
+	else
+	{
+		while (pos++ < ctx->size_a)
+			op_rra(ctx, true);
+	}
+}
 
 /*
  * Implements an insertion sort algorithm for push_swap
@@ -16,35 +33,17 @@ void	sort_insertion(t_context *ctx)
 {
 	int	min_value;
 	int	min_pos;
+	int	size;
 
 	if (!ctx || ctx->size_a <= 1)
 		return ;
-	// Phase 1: Move all elements to stack B in ascending order
 	while (ctx->stack_a)
 	{
-		// Find the minimum value and its position
 		min_value = find_min(ctx->stack_a);
 		min_pos = find_position(ctx->stack_a, min_value);
-		// Optimize the rotations: choose between ra and rra
-		// based on whether min_pos is in the first or second half
-		if (min_pos <= ctx->size_a / 2)
-		{
-			// Element is in the first half, use ra
-			while (ctx->stack_a->value != min_value)
-				op_ra(ctx, true);
-		}
-		else
-		{
-			// Element is in the second half, use rra
-			while (ctx->stack_a->value != min_value)
-				op_rra(ctx, true);
-		}
-		// Push the minimum to B
+		move_element_to_top(ctx, min_pos);
 		op_pb(ctx, true);
 	}
-	// Phase 2: Push everything back to A
-	// Since elements are already sorted in B (in reverse),
-	// we can just push them all back to A
 	while (ctx->stack_b)
 		op_pa(ctx, true);
 }

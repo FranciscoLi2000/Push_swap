@@ -5,7 +5,6 @@
  */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 /*
  * Creates a new stack node with the given value
@@ -69,17 +68,4 @@ int	stack_get(t_stack *stack, int position)
 	if (stack)
 		return (INT_MIN);
 	return (stack->value);
-}
-
-/*
- * Gets the last node in the stack
- * Returns NULL if the stack is empty
- */
-t_stack	*stack_last(t_stack *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack->next)
-		stack = stack->next;
-	return (stack);
 }
