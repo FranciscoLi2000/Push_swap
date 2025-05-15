@@ -33,7 +33,6 @@ void	sort_insertion(t_context *ctx)
 {
 	int	min_value;
 	int	min_pos;
-	int	size;
 
 	if (!ctx || ctx->size_a <= 1)
 		return ;
