@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 00:27:16 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 03:22:50 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/16 15:19:17 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,36 @@ int	stack_size(const t_stack *s)
 	if (!s)
 		return (0);
 	return (s->size);
+}
+
+bool	check_duplicate(const t_stack *s, int value)
+{
+	t_stack_node	*node;
+
+	node = s->top;
+	while (node)
+	{
+		if (node->data == value)
+			return (true);
+		node = node->next;
+	}
+	return (false);
+}
+
+bool	is_sorted(const t_stack *s)
+{
+	t_stack_node	*curr;
+
+	if (!s || !s->top)
+		return (true);
+	curr = s->top;
+	while (curr->next)
+	{
+		if (curr->data > curr->next->data)
+			return (false);
+		curr = curr->next;
+	}
+	return (true);
 }
 
 void	print_stack(const t_stack *s, const char *name)

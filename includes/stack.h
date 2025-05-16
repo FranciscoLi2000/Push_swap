@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:08:54 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 03:26:16 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/16 15:19:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <limits.h>
-#include <stdio.h>
+# include <stdio.h>
 
 typedef struct s_stack_node
 {
@@ -38,6 +38,8 @@ void	stack_clear(t_stack *s);
 bool	stack_is_empty(const t_stack *s);
 int		stack_size(const t_stack *s);
 void	print_stack(const t_stack *s, const char *name);
+bool	check_duplicate(const t_stack *s, int value);
+bool	is_sorted(const t_stack *s);
 void	pa(t_stack *a, t_stack *b, bool print);
 void	pb(t_stack *a, t_stack *b, bool print);
 void	sa(t_stack *a, bool print);
@@ -54,6 +56,6 @@ t_stack	*parse_single_arg(const char *arg);
 t_stack	*parse_multiple_args(int argc, char **argv);
 bool	is_valid_number(const char *str, int *num);
 char	*ft_strchr(const char *str, int c);
-unsigned int	ft_strlcpy(char *dst, char *src, unsigned int size);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 #endif

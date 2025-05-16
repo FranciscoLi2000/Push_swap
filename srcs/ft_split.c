@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 20:58:25 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 12:05:01 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:37:56 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ static int	fill(char **strs, const char *str, char separator)
 char	**ft_split(char const *s, char c)
 {
 	size_t	tokens;
+	size_t	i;
 	char	**words;
 
-	if (!s)
+	if (!s || c == '\0')
 		return (NULL);
 	tokens = count_tokens(s, c);
 	words = malloc((tokens + 1) * sizeof(char *));
@@ -87,6 +88,12 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	words[tokens] = NULL;
 	if (fill(words, s, c) == 1)
+	{
+		i = 0;
+		while (words[i])
+			free(words[i++]);
+		free(words);
 		return (NULL);
+	}
 	return (words);
 }

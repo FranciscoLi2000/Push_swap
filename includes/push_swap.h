@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 21:06:34 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 14:35:42 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/15 22:08:54 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 15:31:14 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
+# include "stack.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <limits.h>
+# include <stdio.h>
 
-	i = 0;
-	if (size > 0)
-	{
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	while (src[i])
-		i++;
-	return (i);
-}
+void	selection_sort(t_stack *a, t_stack *b);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 22:32:18 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 01:49:42 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:31:41 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,18 @@ bool	stack_pop(t_stack *s, int *value)
 
 void	stack_clear(t_stack *s)
 {
+	t_stack_node	*current;
 	t_stack_node	*tmp;
 
 	if (!s)
 		return ;
-	while (s->top)
+	current = s->top;
+	while (current)
 	{
-		tmp = s->top;
-		s->top = s->top->next;
+		tmp = current;
+		current = current->next;
 		free(tmp);
 	}
+	s->top = NULL;
 	s->size = 0;
 }
