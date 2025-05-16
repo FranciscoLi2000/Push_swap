@@ -1,62 +1,79 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_single_arg.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 03:04:08 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 03:17:14 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
- * Free the memory allocated by ft_split
- */
-static void	free_split_args(char **split_args)
+#include "stack.h"
+
+static void	free_split_result(char **split)
 {
 	int	i;
 
+	if (!split)
+		return ;
 	i = 0;
-	while (split_args[i])
+	while (split[i])
 	{
-		free(split_args[i]);
+		free(split[i]);
 		i++;
 	}
-	free(split_args);
+	free(split);
 }
 
-/**
- * Parse a single string argument containing multiple space-separated numbers
- * This handles cases like: ./push_swap "1 2 3"
- */
-bool	parse_single_arg(t_context *ctx, int argc, char **argv)
+bool	is_valid_number(const char *str, int *num)
 {
-	char	**split_args;
-	int		num_args;
-	bool	result;
-	char	**new_argv;
-	int		i;
+	int	val;
 
-	if (!ctx || argc != 2 || !argv[1])
+	val = atoi(str);
+	if (val > INT_MAX || val < INT_MIN)
 		return (false);
-	split_args = ft_split(argv[1], ' ');
-	if (!split_args)
-		return (false);
-	num_args = 0;
-	while (split_args[num_args])
-		num_args++;
-	if (num_args == 0)
+	*num = val;
+	return (true);
+}
+
+t_stack	*parse_single_arg(const char *arg)
+{
+	t_stack	*s;
+	char	**tokens;
+	int		i;
+	int		num;
+
+	s = stack_init();
+	if (!s)
+		return (NULL);
+	tokens = ft_split(arg, ' ');
+	if (!tokens)
 	{
-		free_split_args(split_args);
-		return (false);
+		free(s);
+		return (NULL);
 	}
-	new_argv = (char **)malloc(sizeof(char *) * (num_args + 2));
-	if (!new_argv)
-	{
-		free_split_args(split_args);
-		return (false);
-	}
-	new_argv[0] = argv[0];
 	i = 0;
-	while (i < num_args)
+	while (tokens[i])
 	{
-		new_argv[i + 1] = split_args[i];
+		if (!is_valid_number(tokens[i], &num))
+		{
+			fprintf(stderr, "Error: Invalid number '%s'\n", tokens[i]);
+			free_split_result(tokens);
+			stack_clear(s);
+			free(s);
+			return (NULL);
+		}
+		if (!stack_push(s, num))
+		{
+			free_split_result(tokens);
+			stack_clear(s);
+			free(s);
+			return (NULL);
+		}
 		i++;
 	}
-	new_argv[num_args + 1] = NULL;
-	result = parse_arguments(ctx, num_args + 1, new_argv);
-	free(new_argv);
-	free_split_args(split_args);
-	return (result);
+	free_split_result(tokens);
+	return (s);
 }

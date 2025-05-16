@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 22:57:05 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 02:03:32 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:05:36 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 12:05:15 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	pa(t_stack *a, t_stack *b, bool print)
+char	*ft_strchr(const char *str, int c)
 {
-	int	value;
+	char	ch;
 
-	if (!a || !b || !stack_pop(b, &value))
-		return ;
-	if (stack_push(a, value) && print)
-		write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b, bool print)
-{
-	int	value;
-
-	if (!a || !b || !stack_pop(a, &value))
-		return ;
-	if (stack_push(b, value) && print)
-		write(1, "pb\n", 3);
+	ch = (char)c;
+	while (*str != '\0')
+	{
+		if (*str == ch)
+			return ((char *)str);
+		str++;
+	}
+	if (ch == '\0')
+		return ((char *)str);
+	return (NULL);
 }

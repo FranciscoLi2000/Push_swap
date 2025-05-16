@@ -1,36 +1,37 @@
-/* 
- * PUSH_SWAP MAIN PROGRAM
- * 
- * This file contains the main function for the push_swap program,
- * including a test framework to verify the implementation.
- */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 00:40:51 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 03:23:48 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "push_swap.h"
+#include "stack.h"
 
-/**
- * Main function for push_swap
- * Parses arguments, sorts the stack, and performs cleanup
- */
-int	main(int argc, char **argv)
+int	main(int argc, char **argv) 
 {
-	t_context	*ctx;
+	t_stack	*a;
 
 	if (argc < 2)
-		return (0);
-	ctx = init_context();
-	if (!ctx)
 	{
-		write(2, "Error\n", 6);
+		printf("Usage:\n");
+		printf("  Single argument: %s \"1 2 3\"\n", argv[0]);
+		printf("  Multiple arguments: %s 1 2 3\n", argv[0]);
 		return (1);
 	}
-	if (!parse_arguments(ctx, argc, argv))
-	{
-		write(2, "Error\n", 6);
-		cleanup_context(ctx);
+	a = stack_init();
+	if (argc == 2 && ft_strchr(argv[1], ' '))
+		a = parse_single_arg(argv[1]);
+	else
+		a = parse_multiple_args(argc, argv);
+	if (!a)
 		return (1);
-	}
-	if (!is_stack_sorted(ctx->stack_a))
-		sort(ctx);
-	cleanup_context(ctx);
+	print_stack(a, "Stack A");
+	stack_clear(a);
+	free(a);
 	return (0);
 }

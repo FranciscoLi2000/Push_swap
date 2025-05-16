@@ -1,76 +1,51 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 00:15:56 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 02:01:47 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
- * Reverse rotate operation - shifts all elements of a stack down by 1
- * The last element becomes the first one
- * Used internally by the rra, rrb, and rrr operations
- */
-static void	reverse_rotate(t_stack **stack)
+#include "stack.h"
+
+static void	reverse_rotate(t_stack *s)
 {
-	t_stack	*first;
-	t_stack	*last;
-	t_stack	*second_last;
+	t_stack_node	*second_last;
+	t_stack_node	*last;
 
-	if (!stack || !*stack || !(*stack)->next)
+	if (!s || !s->top || !s->top->next)
 		return ;
-	first = *stack;
-	last = stack_last(*stack);
-	second_last = first;
-	while (second_last->next && second_last->next->next)
+	second_last = s->top;
+	while (second_last->next->next)
 		second_last = second_last->next;
-	if (second_last->next)
-	{
-		last = second_last->next;
-		second_last->next = NULL;
-		last->next = first;
-		*stack = last;
-	}
+	last = second_last->next;
+	last->next = s->top;
+	s->top = last;
+	second_last->next = NULL;
 }
 
-/*
- * rra: Reverse rotate stack A (last element becomes first)
- * If print is true, outputs "rra" to stdout
- */
-void	op_rra(t_context *ctx, bool print)
+void	rra(t_stack *a, bool print)
 {
-	if (!ctx || !ctx->stack_a || !ctx->stack_a->next)
-		return ;
-	reverse_rotate(&ctx->stack_a);
-	ctx->counter.rra++;
-	ctx->counter.total++;
+	reverse_rotate(a);
 	if (print)
 		write(1, "rra\n", 4);
 }
 
-/*
- * rrb: Reverse rotate stack B (last element becomes first)
- * If print is true, outputs "rrb" to stdout
- */
-void	op_rrb(t_context *ctx, bool print)
+void	rrb(t_stack *b, bool print)
 {
-	if (!ctx || !ctx->stack_b || !ctx->stack_b->next)
-		return ;
-	reverse_rotate(&ctx->stack_b);
-	ctx->counter.rrb++;
-	ctx->counter.total++;
+	reverse_rotate(b);
 	if (print)
 		write(1, "rrb\n", 4);
 }
 
-/*
- * rrr: rra and rrb at the same time
- * If print is true, outputs "rrr" to stdout
- */
-void	op_rrr(t_context *ctx, bool print)
+void	rrr(t_stack *a, t_stack *b, bool print)
 {
-	if (!ctx)
-		return ;
-	if (ctx->stack_a && ctx->stack_a->next)
-		reverse_rotate(&ctx->stack_a);
-	if (ctx->stack_b && ctx->stack_b->next)
-		reverse_rotate(&ctx->stack_b);
-	ctx->counter.rrr++;
-	ctx->counter.total++;
+	reverse_rotate(a);
+	reverse_rotate(b);
 	if (print)
 		write(1, "rrr\n", 4);
 }

@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   parse_multiple_args.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 22:57:05 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 02:03:32 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/16 03:11:31 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 03:14:45 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	pa(t_stack *a, t_stack *b, bool print)
+t_stack	*parse_multiple_args(int argc, char **argv)
 {
-	int	value;
+	t_stack	*s;
+	int		i;
+	int		num;
 
-	if (!a || !b || !stack_pop(b, &value))
-		return ;
-	if (stack_push(a, value) && print)
-		write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b, bool print)
-{
-	int	value;
-
-	if (!a || !b || !stack_pop(a, &value))
-		return ;
-	if (stack_push(b, value) && print)
-		write(1, "pb\n", 3);
+	s = stack_init();
+	if (!s)
+		return (NULL);
+	i = 1;
+	while (i < argc)
+	{
+		if (!is_valid_number(argv[i], &num))
+		{
+			fprintf(stderr, "Error: Invalid number '%s'\n", argv[i]);
+			stack_clear(s);
+			free(s);
+			return (NULL);
+		}
+		if (!stack_push(s, num))
+		{
+			stack_clear(s);
+			free(s);
+			return (NULL);
+		}
+	}
+	return (s);
 }

@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 22:57:05 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 02:03:32 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/11 21:06:34 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 12:05:28 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 
-void	pa(t_stack *a, t_stack *b, bool print)
+unsigned int	ft_strlcpy(char *dst, char *src, unsigned int size)
 {
-	int	value;
+	int	len;
 
-	if (!a || !b || !stack_pop(b, &value))
-		return ;
-	if (stack_push(a, value) && print)
-		write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b, bool print)
-{
-	int	value;
-
-	if (!a || !b || !stack_pop(a, &value))
-		return ;
-	if (stack_push(b, value) && print)
-		write(1, "pb\n", 3);
+	len = 0;
+	while (*(src + len) && --size)
+		*dst++ = *(src + len++);
+	*dst = '\0';
+	while (*(src + len))
+		++len;
+	return (len);
 }

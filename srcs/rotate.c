@@ -1,68 +1,51 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 00:02:56 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/16 01:56:17 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
- * Rotate operation - shifts all elements of a stack up by 1
- * The first element becomes the last one
- * Used internally by the ra, rb, and rr operations
- */
-static void	rotate(t_stack **stack)
+#include "stack.h"
+
+static void	rotate(t_stack *s)
 {
-	t_stack	*first;
-	t_stack	*last;
+	t_stack_node	*first;
+	t_stack_node	*last;
 
-	if (!stack || !*stack || !(*stack)->next)
+	if (!s || !s->top || !s->top->next)
 		return ;
-	first = *stack;
-	last = stack_last(*stack);
-	*stack = first->next;
-	first->next = NULL;
+	first = s->top;
+	last = s->top;
+	while (last->next)
+		last = last->next;
+	s->top = first->next;
 	last->next = first;
+	first->next = NULL;
 }
 
-/*
- * ra: Rotate stack A (first element becomes last)
- * If print is true, outputs "ra" to stdout
- */
-void	op_ra(t_context *ctx, bool print)
+void	ra(t_stack *a, bool print)
 {
-	if (!ctx || !ctx->stack_a || !ctx->stack_a->next)
-		return ;
-	rotate(&ctx->stack_a);
-	ctx->counter.ra++;
-	ctx->counter.total++;
+	rotate(a);
 	if (print)
 		write(1, "ra\n", 3);
 }
 
-/*
- * rb: Rotate stack B (first element becomes last)
- * If print is true, outputs "rb" to stdout
- */
-void	op_rb(t_context *ctx, bool print)
+void	rb(t_stack *b, bool print)
 {
-	if (!ctx || !ctx->stack_b || !ctx->stack_b->next)
-		return ;
-	rotate(&ctx->stack_b);
-	ctx->counter.rb++;
-	ctx->counter.total++;
+	rotate(b);
 	if (print)
 		write(1, "rb\n", 3);
 }
 
-/*
- * rr: ra and rb at the same time
- * If print is true, outputs "rr" to stdout
- */
-void	op_rr(t_context *ctx, bool print)
+void	rr(t_stack *a, t_stack *b, bool print)
 {
-	if (!ctx)
-		return ;
-	if (ctx->stack_a && ctx->stack_a->next)
-		rotate(&ctx->stack_a);
-	if (ctx->stack_b && ctx->stack_b->next)
-		rotate(&ctx->stack_b);
-	ctx->counter.rr++;
-	ctx->counter.total++;
+	rotate(a);
+	rotate(b);
 	if (print)
 		write(1, "rr\n", 3);
 }
