@@ -20,6 +20,9 @@
 # include <limits.h>
 # include <stdio.h>
 
-void	selection_sort(t_stack *a, t_stack *b);
+void	sort_two(t_stack *a);
+void	sort_three(t_stack *a);
+void	sort_five(t_stack *a);
+void	sort_insertion(t_stack *a, t_stack *b);
 
 #endif

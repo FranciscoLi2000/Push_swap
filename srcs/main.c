@@ -23,7 +23,7 @@ void	sort(t_stack *a, t_stack *b)
 	else if (a->size <= 5)
 		sort_five(a);
 	else if (a->size <= 20)
-		sort_insertion(a);
+		sort_insertion(a, b);
 	else if (a->size <= 60)
 		sort_chunks(a, b, 3);
 	else if (a->size <= 150)
@@ -32,56 +32,43 @@ void	sort(t_stack *a, t_stack *b)
 		sort_radix(a, b);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_stack *a;
-	t_stack *b;
+	t_stack	*a;
+	t_stack	*b;
 
 	if (argc < 2)
-	{
-		printf("Usage: %s <num1 num2 ...> OR %s \"1 2 3\"\n", argv[0], argv[0]);
-		return (1);
-	}
+		return (0);
 	if (argc == 2 && ft_strchr(argv[1], ' '))
 		a = parse_single_arg(argv[1]);
 	else
 		a = parse_multiple_args(argc, argv);
-
-	if (!a)
+	if (!a || check_duplicate(a))
 	{
-		fprintf(stderr, "Error: Failed to create stack\n");
+		write(2, "Error\n", 6);
+		stack_clear(a);
+		free(a);
 		return (1);
 	}
-
 	if (is_sorted(a))
 	{
-		printf("Stack is already sorted, nothing to do.\n");
-		print_stack(a, "A");
+		write(2, "Error\n", 6);
 		stack_clear(a);
 		free(a);
 		return (0);
 	}
-
 	b = stack_init();
 	if (!b)
 	{
-		fprintf(stderr, "Error: Failed to create stack B\n");
+		write(2, "Error\n", 6);
 		stack_clear(a);
 		free(a);
 		return (1);
 	}
-	print_stack(a, "A before sort");
-	print_stack(b, "B before sort");
-
-	selection_sort(a, b);
-
-	print_stack(a, "A after sort");
-	print_stack(b, "B after sort");
-
+	sort(a, b);
 	stack_clear(a);
 	stack_clear(b);
 	free(a);
 	free(b);
-
 	return (0);
 }

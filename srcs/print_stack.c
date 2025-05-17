@@ -24,14 +24,14 @@ int	stack_size(const t_stack *s)
 	return (s->size);
 }
 
-bool	check_duplicate(const t_stack *s, int value)
+bool	check_duplicate(const t_stack *s)
 {
 	t_stack_node	*node;
 
 	node = s->top;
 	while (node)
 	{
-		if (node->data == value)
+		if (node->data == node->next->data)
 			return (true);
 		node = node->next;
 	}

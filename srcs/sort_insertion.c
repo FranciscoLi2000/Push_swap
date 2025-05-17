@@ -12,54 +12,51 @@
 
 #include "push_swap.h"
 
-int	find_min_pos(const t_stack *s)
+static int	find_insert_position_b(t_stack *b, int value)
 {
-	t_stack_node	*node = s->top;
-	int	min_val;
-	int	min_pos = 0;
-	int	pos = 0;
+	t_stack_node	*node;
+	int			index;
 
-	if (!node)
-		return (-1);
-	min_val = node->data;
+	index = 0;
+	node = b->top;
 	while (node)
 	{
-		if (node->data < min_val)
-		{
-			min_val = node->data;
-			min_pos = pos;
-		}
+		if (value > node->data)
+			return (index);
+		index++;
 		node = node->next;
-		pos++;
 	}
-	return (min_pos);
+	return (index);
 }
 
-void	move_min_to_top(t_stack *s)
+static void	rotate_b_to_position(t_stack *b, int pos, bool print)
 {
-	int	min_pos = find_min_pos(s);
-	int	size = stack_size(s);
+	int	i;
 
-	if (min_pos == -1)
-		return ;
-	if (min_pos <= size / 2)
+	if (pos <= b->size / 2)
 	{
-		while (min_pos-- > 0)
-			ra(s, true);
+		i = 0;
+		while (i++ < pos)
+			rb(b, print);
 	}
 	else
 	{
-		int	rotations = size - min_pos;
-		while (rotations-- > 0)
-			rra(s, true);
+		i = 0;
+		while (i++ < b->size - pos)
+			rrb(b, print);
 	}
 }
 
-void	selection_sort(t_stack *a, t_stack *b)
+void	sort_insertion(t_stack *a, t_stack *b)
 {
+	int	value;
+	int	position;
+
 	while (!stack_is_empty(a))
 	{
-		move_min_to_top(a);
+		value = a->top->data;
+		position = find_insert_position_b(b, value);
+		rotate_b_to_position(b, pos, true);
 		pb(a, b, true);
 	}
 	while (!stack_is_empty(b))
