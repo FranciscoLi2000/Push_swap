@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 00:27:16 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 15:19:17 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:28:00 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,22 @@ int	stack_size(const t_stack *s)
 
 bool	check_duplicate(const t_stack *s)
 {
-	t_stack_node	*node;
+	t_stack_node	*outer;
+	t_stack_node	*inner;
 
-	node = s->top;
-	while (node)
+	if (!s || !s->top)
+		return (false);
+	outer = s->top;
+	while (outer)
 	{
-		if (node->data == node->next->data)
-			return (true);
-		node = node->next;
+		inner = outer->next;
+		while (inner)
+		{
+			if (outer->data == inner->data)
+				return (true);
+			inner = inner->next;
+		}
+		outer = outer->next;
 	}
 	return (false);
 }

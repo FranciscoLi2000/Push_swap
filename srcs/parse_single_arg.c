@@ -6,18 +6,12 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 03:04:08 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 14:57:24 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:22:13 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <string.h>
 
-// Helper function to check if string is a valid integer
 bool	is_valid_number(const char *str, int *num)
 {
 	char	*end;
@@ -32,7 +26,6 @@ bool	is_valid_number(const char *str, int *num)
 	return (true);
 }
 
-// Helper to free split results
 static void	free_split_result(char **split)
 {
 	int	i;

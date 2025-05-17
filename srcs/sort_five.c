@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_five.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/17 18:57:41 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/17 19:40:49 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static int	find_min_index(t_stack *s)
 {
 	t_stack_node	*node;
-	int			min;
-	int			index;
-	int			i;
+	int				min;
+	int				index;
+	int				i;
 
 	node = s->top;
 	min = node->data;

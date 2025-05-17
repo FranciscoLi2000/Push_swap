@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   selection_sort.c                                   :+:      :+:    :+:   */
+/*   sort_insertion.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:24:04 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 15:27:07 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:40:27 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	find_insert_position_b(t_stack *b, int value)
 {
 	t_stack_node	*node;
-	int			index;
+	int				index;
 
 	index = 0;
 	node = b->top;

@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 00:40:51 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 15:46:02 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:09:14 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sort(t_stack *a, t_stack *b)
 	else if (a->size <= 20)
 		sort_insertion(a, b);
 	else if (a->size <= 60)
-		sort_chunks(a, b, 3);
+		sort_chunks(a, b, 4);
 	else if (a->size <= 150)
 		sort_chunks(a, b, 8);
 	else
