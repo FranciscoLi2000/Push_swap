@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 03:04:08 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:22:13 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:50:41 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_stack	*parse_single_arg(const char *arg)
 			fprintf(stderr, "Error: Invalid number '%s'\n", tokens[i]);
 			error = true;
 		}
-		else if (check_duplicate(s, num))
+		else if (check_duplicate(s))
 		{
 			fprintf(stderr, "Error: Duplicate number '%d'\n", num);
 			error = true;

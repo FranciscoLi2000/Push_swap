@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 19:10:51 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:43:33 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:52:38 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	assign_indices(t_stack *a)
 	t_stack_node	*node;
 	int				*array;
 	int				i;
-	int				size;
 
 	array = stack_to_array(a);
 	if (!array)

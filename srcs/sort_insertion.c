@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:24:04 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:40:27 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:52:07 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	find_insert_position_b(t_stack *b, int value)
 	return (index);
 }
 
-static void	rotate_b_to_position(t_stack *b, int pos, bool print)
+void	rotate_b_to_position(t_stack *b, int pos, bool print)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ void	sort_insertion(t_stack *a, t_stack *b)
 	{
 		value = a->top->data;
 		position = find_insert_position_b(b, value);
-		rotate_b_to_position(b, pos, true);
+		rotate_b_to_position(b, position, true);
 		pb(a, b, true);
 	}
 	while (!stack_is_empty(b))

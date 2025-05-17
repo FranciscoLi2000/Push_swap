@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 18:59:13 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:41:19 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:53:56 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	find_position(t_stack *s, int value)
 	}
 	return (-1);
 }
-
+/*
 void	rotate_b_to_position(t_stack *b, int pos, bool print)
 {
 	if (!b || pos < 0 || pos >= b->size)
@@ -78,4 +78,4 @@ void	rotate_b_to_position(t_stack *b, int pos, bool print)
 		while (pos--)
 			rrb(b, print);
 	}
-}
+}*/
