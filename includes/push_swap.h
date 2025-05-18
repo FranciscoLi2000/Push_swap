@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 22:08:54 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 05:54:06 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/18 06:28:11 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 07:34:25 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	free_split(char **split);
 t_stack	*parse_single_arg(char *arg);
 t_stack	*parse_multiple_args(int argc, char **argv);
 bool	is_valid_integer(char *str, long *num);
-void	free_split(char **split);
 void	sort(t_stack *a, t_stack *b);
 void	sort_two(t_stack *a);
 void	sort_three(t_stack *a);
@@ -38,15 +37,8 @@ int		find_smallest_pos(t_stack *a);
 void	rotate_to_smallest(t_stack *a);
 void	sort_five(t_stack *a, t_stack *b);
 int		find_largest_pos(t_stack *b);
-void	sort_insertion(t_stack *a, t_stack *b);
-void	find_min_max(t_stack *s, int *min, int *max);
-int		push_chunk_elements(t_stack *a, t_stack *b, int min_val, int max_val, int *pushed);
-void	sort_back_to_a(t_stack *a, t_stack *b);
-void	correct_sort(t_stack *a);
 void	quick_sort(int *arr, int low, int high);
-void	sort_chunks(t_stack *a, t_stack *b, int num_chunks);
 void	assign_indices(t_stack *a);
-void	sort_radix(t_stack *a, t_stack *b);
 void	sort_butterfly(t_stack *a, t_stack *b);
 
 #endif

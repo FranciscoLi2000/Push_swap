@@ -1,74 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_butterfly.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 06:53:59 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 06:59:01 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void sort_butterfly(t_stack *a, t_stack *b)
+static void	push_butterfly_pattern(
+	t_stack *a,
+	t_stack *b,
+	int size,
+	int butterfly_size
+)
 {
-    int size;
-    int butterfly_size;
-    int i;
-    int pushed;
+	int	i;
+	int	pushed;
 
-    if (!a || !b || a->size <= 5)
-    {
-        if (a && a->size <= 5)
-            sort_five(a, b);
-        return;
-    }
+	i = 0;
+	pushed = 0;
+	while (pushed < size)
+	{
+		if (a->top->index <= i)
+		{
+			pb(a, b);
+			rb(b);
+			pushed++;
+			i++;
+		}
+		else if (a->top->index <= i + butterfly_size)
+		{
+			pb(a, b);
+			pushed++;
+			i++;
+		}
+		else
+			ra(a);
+	}
+}
 
-    // Assign indices
-    assign_indices(a);
+static void	sort_back_to_a(t_stack *a, t_stack *b)
+{
+	int	pos;
 
-    size = a->size;
-    // Calculate butterfly size (sqrt(n) is often effective)
-    butterfly_size = 0;
-    while (butterfly_size * butterfly_size < size)
-        butterfly_size++;
+	while (b->size > 0)
+	{
+		pos = find_largest_pos(b);
+		if (pos <= b->size / 2)
+		{
+			while (pos-- > 0)
+				rb(b);
+		}
+		else
+		{
+			while (pos++ < b->size)
+				rrb(b);
+		}
+		pa(a, b);
+	}
+}
 
-    // Push elements to stack b in butterfly pattern
-    pushed = 0;
-    i = 0;
-    while (pushed < size)
-    {
-        if (a->top->index <= i)
-        {
-            pb(a, b);
-            rb(b);
-            pushed++;
-            i++;
-        }
-        else if (a->top->index <= i + butterfly_size)
-        {
-            pb(a, b);
-            pushed++;
-            i++;
-        }
-        else
-            ra(a);
-    }
+void	sort_butterfly(t_stack *a, t_stack *b)
+{
+	int	size;
+	int	butterfly_size;
 
-    // Sort back to stack a
-    while (b->size > 0)
-    {
-        // Find the position of the largest element in stack b
-        int pos = find_largest_pos(b);
-
-        // Rotate stack b to bring the largest element to the top
-        if (pos <= b->size / 2)
-        {
-            while (pos > 0)
-            {
-                rb(b);
-                pos--;
-            }
-        }
-        else
-        {
-            while (pos < b->size)
-            {
-                rrb(b);
-                pos++;
-            }
-        }
-
-        pa(a, b);
-    }
+	if (!a || !b || a->size <= 5)
+	{
+		if (a && a->size <= 5)
+			sort_five(a, b);
+		return ;
+	}
+	assign_indices(a);
+	size = a->size;
+	butterfly_size = 0;
+	while (butterfly_size * butterfly_size < size)
+		butterfly_size++;
+	push_butterfly_pattern(a, b, size, butterfly_size);
+	sort_back_to_a(a, b);
 }

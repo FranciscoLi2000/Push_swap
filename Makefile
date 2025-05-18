@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/17 19:48:25 by yufli             #+#    #+#              #
-#    Updated: 2025/05/18 05:55:26 by yufli            ###   ########.fr        #
+#    Created: 2025/05/18 07:28:28 by yufli             #+#    #+#              #
+#    Updated: 2025/05/18 07:33:32 by yufli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,26 +18,12 @@ SRCDIR		= srcs
 OBJDIR		= objs
 
 SRCFILES	= \
-	ft_split.c \
-	parse_multiple_args.c \
-	rotate.c \
-	stack_utils.c \
-	ft_strchr.c \
-	ft_strlcpy.c \
-	parse_single_arg.c \
-	sort_three.c \
-	swap.c \
-	input_validation.c \
-	push.c \
-	sort_two.c \
-	main.c \
-	reverse_rotate.c \
-	sort_five.c \
-	stack.c \
-	sort_radix.c \
-	sort_radix_utils.c \
-	sort_insertion.c \
-	sort_butterfly.c
+	assign_indices.c ft_strlcpy.c parse_single_arg.c \
+	rotate.c sort_two.c find_largest_pos.c  \
+	input_validation.c push.c sort_butterfly.c \
+	stack.c ft_split.c main.c quick_sort.c sort_five.c \
+	stack_utils.c ft_strchr.c parse_multiple_args.c \
+	reverse_rotate.c sort_three.c swap.c
 
 SRC			= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJ			= $(addprefix $(OBJDIR)/, $(SRCFILES:.c=.o))
@@ -55,15 +41,15 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-	@echo "$(GREEN)✅ Compiled $(NAME)$(RESET)"
+	@echo "$(GREEN)Compiled $(NAME)$(RESET)"
 
 clean:
 	@rm -rf $(OBJDIR)
-	@echo "🧹 Cleaned object files"
+	@echo "$(GREEN)Cleaned object files"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "🧹🧹 Fully cleaned"
+	@echo "$(GREEN)Fully cleaned"
 
 re: fclean all
 

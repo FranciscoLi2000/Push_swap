@@ -1,9 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 07:21:38 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 07:23:09 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "stack.h"
 
-/*
-** Initializes an empty stack
-** Returns a pointer to the new stack, or NULL if allocation fails
-*/
 t_stack	*stack_init(void)
 {
 	t_stack	*stack;
@@ -16,10 +24,6 @@ t_stack	*stack_init(void)
 	return (stack);
 }
 
-/*
-** Pushes a new value onto the stack
-** Returns true if successful, false if allocation fails
-*/
 bool	stack_push(t_stack *s, int value)
 {
 	t_stack_node	*new_node;
@@ -37,11 +41,7 @@ bool	stack_push(t_stack *s, int value)
 	return (true);
 }
 
-/*
-** Pops the top value from the stack and stores it in the provided pointer
-** Returns true if successful, false if the stack is empty
-*/
-bool    stack_pop(t_stack *s, int *value)
+bool	stack_pop(t_stack *s, int *value)
 {
 	t_stack_node	*temp;
 
@@ -55,10 +55,6 @@ bool    stack_pop(t_stack *s, int *value)
 	return (true);
 }
 
-/*
-** Frees all nodes in the stack
-** The stack structure itself must be freed separately
-*/
 void	stack_clear(t_stack *s)
 {
 	t_stack_node	*current;

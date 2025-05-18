@@ -1,9 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_multiple_args.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 06:43:10 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 06:43:44 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-/*
-** Parses multiple arguments as integers
-** Returns a stack with the parsed integers, or NULL if an error occurs
-*/
 t_stack	*parse_multiple_args(int argc, char **argv)
 {
 	t_stack	*stack;
@@ -13,7 +21,6 @@ t_stack	*parse_multiple_args(int argc, char **argv)
 	stack = stack_init();
 	if (!stack)
 		return (NULL);
-	// Process in reverse order to maintain the original order in the stack
 	i = argc;
 	while (--i > 0)
 	{

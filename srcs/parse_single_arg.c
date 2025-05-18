@@ -1,9 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_single_arg.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 06:44:46 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 06:46:05 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-/*
-** Parses a single argument containing space-separated integers
-** Returns a stack with the parsed integers, or NULL if an error occurs
-*/
+static t_stack	*free_all_and_return_null(t_stack *stack, char **split)
+{
+	free_split(split);
+	stack_clear(stack);
+	free(stack);
+	return (NULL);
+}
+
 t_stack	*parse_single_arg(char *arg)
 {
 	t_stack	*stack;
@@ -23,23 +39,11 @@ t_stack	*parse_single_arg(char *arg)
 	i = 0;
 	while (split[i])
 		i++;
-	// Process in reverse order to maintain the original order in the stack
 	while (--i >= 0)
 	{
-		if (!is_valid_integer(split[i], &num))
-		{
-			free_split(split);
-			stack_clear(stack);
-			free(stack);
-			return (NULL);
-		}
-		if (!stack_push(stack, (int)num))
-		{
-			free_split(split);
-			stack_clear(stack);
-			free(stack);
-			return (NULL);
-		}
+		if (!is_valid_integer(split[i], &num)
+			|| !stack_push(stack, (int)num))
+			return (free_all_and_return_null(stack, split));
 	}
 	free_split(split);
 	return (stack);

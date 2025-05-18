@@ -1,17 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 07:23:37 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 07:24:59 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "stack.h"
 
-/*
-** Checks if the stack is empty
-** Returns true if empty, false otherwise
-*/
 bool	stack_is_empty(const t_stack *s)
 {
 	return (!s || s->size == 0);
 }
 
-/*
-** Returns the number of elements in the stack
-*/
 int	stack_size(const t_stack *s)
 {
 	if (!s)
@@ -19,10 +24,6 @@ int	stack_size(const t_stack *s)
 	return (s->size);
 }
 
-/*
-** Checks if the stack is sorted in ascending order
-** Returns true if sorted, false otherwise
-*/
 bool	is_sorted(const t_stack *s)
 {
 	t_stack_node	*current;
@@ -39,10 +40,6 @@ bool	is_sorted(const t_stack *s)
 	return (true);
 }
 
-/*
-** Checks for duplicate values in the stack
-** Returns true if duplicates are found, false otherwise
-*/
 bool	check_duplicate(const t_stack *s)
 {
 	t_stack_node	*i;
@@ -63,23 +60,4 @@ bool	check_duplicate(const t_stack *s)
 		i = i->next;
 	}
 	return (false);
-}
-
-/*
-** Prints the contents of the stack for debugging purposes
-*/
-void	print_stack(const t_stack *s, const char *name)
-{
-	t_stack_node	*current;
-
-	if (!s)
-		return ;
-	printf("Stack %s (size %d):\n", name, s->size);
-	current = s->top;
-	while (current)
-	{
-		printf("%d ", current->data);
-		current = current->next;
-	}
-	printf("\n");
 }

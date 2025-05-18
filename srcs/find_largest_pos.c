@@ -1,21 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_two.c                                         :+:      :+:    :+:   */
+/*   find_largest_pos.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 07:20:37 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 07:21:05 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/18 07:05:31 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/18 07:06:08 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_two(t_stack *a)
+int	find_largest_pos(t_stack *b)
 {
-	if (!a || a->size != 2)
-		return ;
-	if (a->top->data > a->top->next->data)
-		sa(a);
+	t_stack_node	*current;
+	int				largest;
+	int				pos;
+	int				largest_pos;
+
+	if (!b || !b->top)
+		return (-1);
+	current = b->top;
+	largest = current->data;
+	pos = 0;
+	largest_pos = 0;
+	while (current)
+	{
+		if (current->data > largest)
+		{
+			largest = current->data;
+			largest_pos = pos;
+		}
+		current = current->next;
+		pos++;
+	}
+	return (largest_pos);
 }
