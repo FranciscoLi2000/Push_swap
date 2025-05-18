@@ -1,64 +1,76 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_insertion.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 15:24:04 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:52:07 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
-static int	find_insert_position_b(t_stack *b, int value)
+/*
+** Finds the position of the largest element in the stack
+** Returns the position (0-based), or -1 if the stack is empty
+*/
+int	find_largest_pos(t_stack *b)
 {
-	t_stack_node	*node;
-	int				index;
+	t_stack_node	*current;
+	int				largest;
+	int				pos;
+	int				largest_pos;
 
-	index = 0;
-	node = b->top;
-	while (node)
+	if (!b || !b->top)
+		return (-1);
+	current = b->top;
+	largest = current->data;
+	pos = 0;
+	largest_pos = 0;
+	while (current)
 	{
-		if (value > node->data)
-			return (index);
-		index++;
-		node = node->next;
+		if (current->data > largest)
+		{
+			largest = current->data;
+			largest_pos = pos;
+		}
+		current = current->next;
+		pos++;
 	}
-	return (index);
+	return (largest_pos);
 }
 
-void	rotate_b_to_position(t_stack *b, int pos, bool print)
-{
-	int	i;
-
-	if (pos <= b->size / 2)
-	{
-		i = 0;
-		while (i++ < pos)
-			rb(b, print);
-	}
-	else
-	{
-		i = 0;
-		while (i++ < b->size - pos)
-			rrb(b, print);
-	}
-}
-
+/*
+** Sorts a stack using insertion sort
+*/
 void	sort_insertion(t_stack *a, t_stack *b)
 {
-	int	value;
-	int	position;
+	int	pos;
 
-	while (!stack_is_empty(a))
+	if (!a || !b || a->size <= 5)
 	{
-		value = a->top->data;
-		position = find_insert_position_b(b, value);
-		rotate_b_to_position(b, position, true);
-		pb(a, b, true);
+		if (a && a->size <= 5)
+			sort_five(a, b);
+		return ;
 	}
-	while (!stack_is_empty(b))
-		pa(a, b, true);
+	// Push all elements except the last one to stack b
+	while (a->size > 1)
+		pb(a, b);
+	// Insert elements back into stack a in sorted order
+	while (b->size > 0)
+	{
+		// Find the position of the largest element in stack b
+		pos = find_largest_pos(b);
+		// Rotate stack b to bring the largest element to the top
+		if (pos <= b->size / 2)
+		{
+			// Rotate forward
+			while (pos > 0)
+			{
+				rb(b);
+				pos--;
+			}
+		}
+		else
+		{
+			// Rotate backward
+			while (pos < b->size)
+			{
+				rrb(b);
+				pos++;
+			}
+		}
+		// Push the largest element to stack a
+		pa(a, b);
+	}
 }

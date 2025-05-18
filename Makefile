@@ -6,7 +6,7 @@
 #    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/17 19:48:25 by yufli             #+#    #+#              #
-#    Updated: 2025/05/17 19:49:20 by yufli            ###   ########.fr        #
+#    Updated: 2025/05/18 05:55:26 by yufli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,25 +18,26 @@ SRCDIR		= srcs
 OBJDIR		= objs
 
 SRCFILES	= \
-	main.c \
 	ft_split.c \
+	parse_multiple_args.c \
+	rotate.c \
+	stack_utils.c \
 	ft_strchr.c \
 	ft_strlcpy.c \
 	parse_single_arg.c \
-	parse_multiple_args.c \
-	print_stack.c \
-	stack.c \
-	push.c \
-	swap.c \
-	rotate.c \
-	reverse_rotate.c \
-	sort_two.c \
 	sort_three.c \
+	swap.c \
+	input_validation.c \
+	push.c \
+	sort_two.c \
+	main.c \
+	reverse_rotate.c \
 	sort_five.c \
+	stack.c \
+	sort_radix.c \
+	sort_radix_utils.c \
 	sort_insertion.c \
-	sort_chunk.c \
-	sort_chunk_utils.c \
-	sort_radix.c
+	sort_butterfly.c
 
 SRC			= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJ			= $(addprefix $(OBJDIR)/, $(SRCFILES:.c=.o))

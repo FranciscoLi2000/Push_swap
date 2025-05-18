@@ -1,96 +1,46 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_single_arg.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 03:04:08 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:50:41 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "push_swap.h"
 
-#include "stack.h"
-
-bool	is_valid_number(const char *str, int *num)
+/*
+** Parses a single argument containing space-separated integers
+** Returns a stack with the parsed integers, or NULL if an error occurs
+*/
+t_stack	*parse_single_arg(char *arg)
 {
-	char	*end;
-	long	val;
+	t_stack	*stack;
+	char	**split;
+	int		i;
+	long	num;
 
-	if (!str || !*str)
-		return (false);
-	val = strtol(str, &end, 10);
-	if (*end != '\0' || val > INT_MAX || val < INT_MIN)
-		return (false);
-	*num = (int)val;
-	return (true);
-}
-
-static void	free_split_result(char **split)
-{
-	int	i;
-
+	stack = stack_init();
+	if (!stack)
+		return (NULL);
+	split = ft_split(arg, ' ');
 	if (!split)
-		return ;
+	{
+		free(stack);
+		return (NULL);
+	}
 	i = 0;
 	while (split[i])
-	{
-		free(split[i]);
 		i++;
-	}
-	free(split);
-}
-
-t_stack	*parse_single_arg(const char *arg)
-{
-	t_stack	*s;
-	char	**tokens;
-	bool	error;
-	int		num;
-	int		i;
-
-	if (!arg || !*arg)
+	// Process in reverse order to maintain the original order in the stack
+	while (--i >= 0)
 	{
-		fprintf(stderr, "Error: Empty input\n");
-		return (NULL);
-	}
-	s = stack_init();
-	if (!s)
-		return (NULL);
-	tokens = ft_split(arg, ' ');
-	if (!tokens)
-	{
-		stack_clear(s);
-		free(s);
-		return (NULL);
-	}
-	error = false;
-	i = 0;
-	while (tokens[i] && !error)
-	{
-		if (!is_valid_number(tokens[i], &num))
+		if (!is_valid_integer(split[i], &num))
 		{
-			fprintf(stderr, "Error: Invalid number '%s'\n", tokens[i]);
-			error = true;
+			free_split(split);
+			stack_clear(stack);
+			free(stack);
+			return (NULL);
 		}
-		else if (check_duplicate(s))
+		if (!stack_push(stack, (int)num))
 		{
-			fprintf(stderr, "Error: Duplicate number '%d'\n", num);
-			error = true;
+			free_split(split);
+			stack_clear(stack);
+			free(stack);
+			return (NULL);
 		}
-		else if (!stack_push(s, num))
-		{
-			fprintf(stderr, "Error: Memory allocation failed\n");
-			error = true;
-		}
-		i++;
 	}
-	free_split_result(tokens);
-	if (error)
-	{
-		stack_clear(s);
-		free(s);
-		return (NULL);
-	}
-	return (s);
+	free_split(split);
+	return (stack);
 }

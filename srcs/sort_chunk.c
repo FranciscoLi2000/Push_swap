@@ -1,114 +1,54 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_chunk.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 18:56:49 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:45:43 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
-int	*stack_to_array(t_stack *a)
+/*
+** Sorts a stack using the chunk method with improved correctness
+** The stack is divided into 'num_chunks' chunks
+*/
+void	sort_chunks(t_stack *a, t_stack *b, int num_chunks)
 {
-	int				*arr;
-	t_stack_node	*node;
-	int				i;
-
-	if (!a || a->size == 0)
-		return (NULL);
-	arr = malloc(sizeof(int) * a->size);
-	if (!arr)
-		return (NULL);
-	node = a->top;
-	i = 0;
-	while (node)
-	{
-		arr[i++] = node->data;
-		node = node->next;
-	}
-	return (arr);
-}
-
-void	sort_array(int *arr, int size)
-{
+	int	min;
+	int	max;
+	int	range;
+	int	chunk_size;
 	int	i;
-	int	j;
-	int	tmp;
+	int	pushed;
+	int	chunk_min;
+	int	chunk_max;
 
-	i = 0;
-	while (i < size - 1)
+	if (!a || !b || a->size <= 20)
 	{
-		j = 0;
-		while (j < size - 1 - i)
+		if (a && a->size <= 20)
+			sort_insertion(a, b);
+		return ;
+	}
+	// Find min and max values in stack a
+	find_min_max(a, &min, &max);
+	range = max - min + 1;
+	chunk_size = range / num_chunks;
+	if (range % num_chunks != 0)
+		chunk_size++;
+	// Push elements to stack b in chunks
+	i = 0;
+	while (i < num_chunks)
+	{
+		pushed = 0;
+		while (pushed < chunk_size && !stack_is_empty(a))
 		{
-			if (arr[j] > arr[j + 1])
-			{
-				tmp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = tmp;
-			}
-			j++;
+			// Calculate current chunk boundaries
+			chunk_min = min + i * chunk_size;
+			chunk_max = min + (i + 1) * chunk_size - 1;
+			if (i == num_chunks - 1)
+				chunk_max = max; // Ensure the last chunk includes max
+			// Find and push elements in current chunk
+			if (push_chunk_elements(a, b, chunk_min, chunk_max, &pushed) == 0)
+				break ; // No more elements in this chunk
 		}
 		i++;
 	}
-}
-
-void	push_chunks(t_stack *a, t_stack *b, int *sorted, int total, int chunks)
-{
-	int	i;
-	int	chunk_size;
-	int	chunk_limit;
-	int	rank;
-
-	i = 0;
-	chunk_size = total / chunks;
-	chunk_limit = chunk_size;
-	while (i < total)
-	{
-		rank = find_index_in_sorted(a->top->data, sorted, total);
-		if (rank < chunk_limit)
-		{
-			pb(a, b, true);
-			if (rank < chunk_limit - chunk_size / 2)
-				rb(b, true);
-			i++;
-		}
-		else
-			ra(a, true);
-		if (i >= chunk_limit && chunk_limit < total)
-			chunk_limit += chunk_size;
-	}
-}
-
-static void	push_back_to_a(t_stack *a, t_stack *b)
-{
-	int	max;
-	int	pos;
-
-	while (!stack_is_empty(b))
-	{
-		max = find_max(b);
-		pos = find_position(b, max);
-		rotate_b_to_position(b, pos, true);
-		pa(a, b, true);
-	}
-}
-
-void	sort_chunks(t_stack *a, t_stack *b, int num_chunks)
-{
-	int	*arr;
-	int	total;
-
-	arr = stack_to_array(a);
-	total = a->size;
-	if (!arr)
-		return ;
-	sort_array(arr, total);
-	push_chunks(a, b, arr, total, num_chunks);
-	push_back_to_a(a, b);
-	free(arr);
+	// Sort elements back from stack b to stack a
+	sort_back_to_a(a, b);
+	// Verify the stack is sorted
+	if (!is_sorted(a))
+		// Final correction if needed
+		correct_sort(a);
 }

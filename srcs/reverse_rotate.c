@@ -1,51 +1,94 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 00:15:56 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/16 02:01:47 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "stack.h"
 
-static void	reverse_rotate(t_stack *s)
+/*
+** Shifts down all elements of stack a by 1
+** The last element becomes the first one
+** Prints "rra" to stdout
+*/
+void	rra(t_stack *a)
 {
-	t_stack_node	*second_last;
 	t_stack_node	*last;
+	t_stack_node	*second_last;
 
-	if (!s || !s->top || !s->top->next)
+	if (!a || !a->top || !a->top->next)
 		return ;
-	second_last = s->top;
-	while (second_last->next->next)
-		second_last = second_last->next;
-	last = second_last->next;
-	last->next = s->top;
-	s->top = last;
+	// Find the last and second-to-last nodes
+	last = a->top;
+	second_last = NULL;
+	while (last->next)
+	{
+		second_last = last;
+		last = last->next;
+	}
+	// Move the last node to the front
 	second_last->next = NULL;
+	last->next = a->top;
+	a->top = last;
+	write(1, "rra\n", 4);
 }
 
-void	rra(t_stack *a, bool print)
+/*
+** Shifts down all elements of stack b by 1
+** The last element becomes the first one
+** Prints "rrb" to stdout
+*/
+void	rrb(t_stack *b)
 {
-	reverse_rotate(a);
-	if (print)
-		write(1, "rra\n", 4);
+	t_stack_node	*last;
+	t_stack_node	*second_last;
+
+	if (!b || !b->top || !b->top->next)
+		return ;
+	// Find the last and second-to-last nodes
+	last = b->top;
+	second_last = NULL;
+	while (last->next)
+	{
+		second_last = last;
+		last = last->next;
+	}
+	// Move the last node to the front
+	second_last->next = NULL;
+	last->next = b->top;
+	b->top = last;
+	write(1, "rrb\n", 4);
 }
 
-void	rrb(t_stack *b, bool print)
+/*
+** Shifts down all elements of both stacks a and b by 1
+** Prints "rrr" to stdout
+*/
+void	rrr(t_stack *a, t_stack *b)
 {
-	reverse_rotate(b);
-	if (print)
-		write(1, "rrb\n", 4);
-}
-
-void	rrr(t_stack *a, t_stack *b, bool print)
-{
-	reverse_rotate(a);
-	reverse_rotate(b);
-	if (print)
-		write(1, "rrr\n", 4);
+	t_stack_node	*last;
+	t_stack_node	*second_last;
+	// Reverse rotate stack a if possible
+	if (a && a->top && a->top->next)
+	{
+		last = a->top;
+		second_last = NULL;
+		while (last->next)
+		{
+			second_last = last;
+			last = last->next;
+		}
+		second_last->next = NULL;
+		last->next = a->top;
+		a->top = last;
+	}
+	// Reverse rotate stack b if possible
+	if (b && b->top && b->top->next)
+	{
+		last = b->top;
+		second_last = NULL;
+		while (last->next)
+		{
+			second_last = last;
+			last = last->next;
+		}
+		second_last->next = NULL;
+		last->next = b->top;
+		b->top = last;
+	}
+	write(1, "rrr\n", 4);
 }

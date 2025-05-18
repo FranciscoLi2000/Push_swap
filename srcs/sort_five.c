@@ -1,75 +1,92 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_five.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 18:57:41 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 19:40:49 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
-static int	find_min_index(t_stack *s)
+/*
+** Finds the position of the smallest element in the stack
+** Returns the position (0-based), or -1 if the stack is empty
+*/
+int	find_smallest_pos(t_stack *a)
 {
-	t_stack_node	*node;
-	int				min;
-	int				index;
-	int				i;
+	t_stack_node	*current;
+	int				smallest;
+	int				pos;
+	int				smallest_pos;
 
-	node = s->top;
-	min = node->data;
-	index = 0;
-	i = 0;
-	while (node)
+	if (!a || !a->top)
+		return (-1);
+	current = a->top;
+	smallest = current->data;
+	pos = 0;
+	smallest_pos = 0;
+	while (current)
 	{
-		if (node->data < min)
+		if (current->data < smallest)
 		{
-			min = node->data;
-			index = i;
+			smallest = current->data;
+			smallest_pos = pos;
 		}
-		node = node->next;
-		i++;
+		current = current->next;
+		pos++;
 	}
-	return (index);
+	return (smallest_pos);
 }
 
-static void	push_min_to_b(t_stack *a, t_stack *b)
+/*
+** Rotates the stack to bring the smallest element to the top
+*/
+void	rotate_to_smallest(t_stack *a)
 {
-	int	index;
+	int	pos;
+	int	size;
 
-	index = find_min_index(a);
-	if (index == 1)
-		ra(a, true);
-	else if (index == 2)
-	{
-		ra(a, true);
-		ra(a, true);
-	}
-	else if (index == 3 && a->size == 5)
-	{
-		rra(a, true);
-		rra(a, true);
-	}
-	else if (index == 4 && a->size == 5)
-		rra(a, true);
-	pb(a, b, true);
-}
-
-void	sort_five(t_stack *a)
-{
-	t_stack	*b;
-
-	b = stack_init();
-	if (!b)
+	pos = find_smallest_pos(a);
+	if (pos == -1)
 		return ;
-	while (a->size > 3)
-		push_min_to_b(a, b);
+	size = a->size;
+	// Choose the most efficient rotation direction
+	if (pos <= size / 2)
+	{
+		// Rotate forward
+		while (pos > 0)
+		{
+			ra(a);
+			pos--;
+		}
+	}
+	else
+	{
+		// Rotate backward
+		while (pos < size)
+		{
+			rra(a);
+			pos++;
+		}
+	}
+}
+
+/*
+** Sorts a stack with up to 5 elements
+*/
+void	sort_five(t_stack *a, t_stack *b)
+{
+	int	elements_to_push;
+
+	if (!a || !b || a->size <= 3)
+	{
+		if (a && a->size <= 3)
+			sort_three(a);
+		return ;
+	}
+	// Push the 2 smallest elements to stack b
+	elements_to_push = a->size - 3;
+	while (elements_to_push > 0)
+	{
+		rotate_to_smallest(a);
+		pb(a, b);
+		elements_to_push--;
+	}
+	// Sort the remaining 3 elements in stack a
 	sort_three(a);
-	while (!stack_is_empty(b))
-		pa(a, b, true);
-	stack_clear(b);
-	free(b);
+	// Push elements back from stack b to stack a
+	while (b->size > 0)
+		pa(a, b);
 }

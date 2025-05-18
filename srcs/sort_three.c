@@ -1,40 +1,33 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_three.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 18:57:55 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 18:58:38 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
+/*
+** Sorts a stack with 3 elements
+*/
 void	sort_three(t_stack *a)
 {
-	int	x;
-	int	y;
-	int	z;
+	int	first;
+	int	second;
+	int	third;
 
-	x = a->top->data;
-	y = a->top->next->data;
-	z = a->top->next->next->data;
-	if (x > y && y < z && x < z)
-		sa(a, true);
-	else if (x > y && y > z)
+	if (!a || a->size != 3)
+		return ;
+	first = a->top->data;
+	second = a->top->next->data;
+	third = a->top->next->next->data;
+	if (first > second && second < third && first < third)
+		sa(a);
+	else if (first > second && second > third)
 	{
-		sa(a, true);
-		rra(a, true);
+		sa(a);
+		rra(a);
 	}
-	else if (x > y && y < z && x > z)
-		ra(a, true);
-	else if (x < y && y > z && x < z)
+	else if (first > second && second < third && first > third)
+		ra(a);
+	else if (first < second && second > third && first < third)
 	{
-		sa(a, true);
-		ra(a, true);
+		sa(a);
+		ra(a);
 	}
-	else if (x < y && y > z && x > z)
-		rra(a, true);
+	else if (first < second && second > third && first > third)
+		rra(a);
 }

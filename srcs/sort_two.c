@@ -1,21 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort_two.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 18:58:43 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/17 18:58:46 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
+/*
+** Sorts a stack with 2 elements
+*/
 void	sort_two(t_stack *a)
 {
 	if (!a || a->size != 2)
 		return ;
 	if (a->top->data > a->top->next->data)
-		sa(a, true);
+		sa(a);
 }
