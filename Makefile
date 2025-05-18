@@ -6,7 +6,7 @@
 #    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/18 07:28:28 by yufli             #+#    #+#              #
-#    Updated: 2025/05/18 07:33:32 by yufli            ###   ########.fr        #
+#    Updated: 2025/05/18 16:02:13 by yufli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(OBJDIR):
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) Makefile
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "$(GREEN)Compiled $(NAME)$(RESET)"
 
