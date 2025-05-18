@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 06:32:22 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 06:32:37 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/31 19:14:09 by yufli             #+#    #+#             */
+/*   Updated: 2024/12/31 19:20:14 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include <unistd.h>
+#include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	ch;
+	int	len;
 
-	ch = (char)c;
-	while (*str != '\0')
-	{
-		if (*str == ch)
-			return ((char *)str);
-		str++;
-	}
-	if (ch == '\0')
-		return ((char *)str);
-	return (NULL);
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	write(fd, s, len);
 }

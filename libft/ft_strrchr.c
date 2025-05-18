@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 06:32:59 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 06:33:17 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/28 13:06:43 by yufli             #+#    #+#             */
+/*   Updated: 2024/12/28 20:45:15 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include <unistd.h>
+#include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
+	int	len;
 
-	i = 0;
-	if (size > 0)
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	while (len >= 0)
 	{
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
+		if (s[len] == (char)c)
+			return ((char *)&s[len]);
+		len--;
 	}
-	while (src[i])
-		i++;
-	return (i);
+	return (NULL);
 }

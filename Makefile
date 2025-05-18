@@ -6,50 +6,45 @@
 #    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/18 07:28:28 by yufli             #+#    #+#              #
-#    Updated: 2025/05/18 16:02:13 by yufli            ###   ########.fr        #
+#    Updated: 2025/05/18 23:34:33 by yufli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= push_swap
-CC		= cc
-CFLAGS		= -Wall -Wextra -Werror -Iincludes
+# Compilador i flags
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror -Iincludes
 
-SRCDIR		= srcs
-OBJDIR		= objs
+# Carpetes
+SRC_DIR     = srcs
+LIBFT_DIR   = libft
 
-SRCFILES	= \
-	assign_indices.c ft_strlcpy.c parse_single_arg.c \
-	rotate.c sort_two.c find_largest_pos.c  \
-	input_validation.c push.c sort_butterfly.c \
-	stack.c ft_split.c main.c quick_sort.c sort_five.c \
-	stack_utils.c ft_strchr.c parse_multiple_args.c \
-	reverse_rotate.c sort_three.c swap.c
+# Output
+NAME    = push_swap
 
-SRC			= $(addprefix $(SRCDIR)/, $(SRCFILES))
-OBJ			= $(addprefix $(OBJDIR)/, $(SRCFILES:.c=.o))
+# Arxius font
+SRC_FILES   = $(wildcard $(SRC_DIR)/*.c)
+LIBFT_FILES = $(wildcard $(LIBFT_DIR)/*.c)
+SRCS        = $(SRC_FILES) $(LIBFT_FILES)
+OBJS        = $(SRCS:.c=.o)
 
-GREEN	= \033[0;32m
-RESET	= \033[0m
+# Colors
+GREEN   = \033[0;32m
+RESET   = \033[0m
 
+# Regles
 all: $(NAME)
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(NAME): $(OBJ) Makefile
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-	@echo "$(GREEN)Compiled $(NAME)$(RESET)"
+$(NAME): $(OBJS)
+	@echo "Compilant $(NAME)..."
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
-	@rm -rf $(OBJDIR)
-	@echo "$(GREEN)Cleaned object files"
+	@echo "Netegem objectes..."
+	rm -f $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo "$(GREEN)Fully cleaned"
+	@echo "Esborrem executable..."
+	rm -f $(NAME)
 
 re: fclean all
 
