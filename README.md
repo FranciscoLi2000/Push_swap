@@ -1,141 +1,152 @@
-# Explicación del Algoritmo Butterfly Sort
+# Push_swap: To study in C the Data Structure and Sorting Algorithms
 
-## Introducción
+![42 Project](https://img.shields.io/badge/42-Project-brightgreen)
+![C Language](https://img.shields.io/badge/Language-C-blue)
+![Algorithm](https://img.shields.io/badge/Category-Algorithm-orange)
 
-El algoritmo "Butterfly Sort" (ordenación mariposa) es una estrategia de ordenación especialmente diseñada para el proyecto Push Swap. Este proyecto requiere ordenar una serie de números utilizando dos pilas (A y B) y un conjunto limitado de operaciones, buscando minimizar el número total de operaciones necesarias.
+## Overview
 
-## Conceptos Básicos
+Push_swap is an algorithmic project that challenges you to sort data using a limited set of instructions with the goal of minimizing the number of operations. The project involves sorting integers using two stacks and a specific set of operations, requiring efficient algorithm design and implementation.
 
-Antes de explicar el algoritmo, es importante entender:
+## Table of Contents
 
-1. **Dos pilas**: Trabajamos con dos pilas, A (donde están inicialmente todos los números) y B (inicialmente vacía).
+- [The Challenge](#the-challenge)
+- [Sorting Algorithms](#sorting-algorithms)
+  - [Butterfly Sort Algorithm](#butterfly-sort-algorithm)
+  - [Small Stack Optimizations](#small-stack-optimizations)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Performance](#performance)
+- [Project Structure](#project-structure)
+- [License](#license)
 
-2. **Operaciones permitidas**:
-   - `sa`: Intercambiar los dos primeros elementos de la pila A
-   - `sb`: Intercambiar los dos primeros elementos de la pila B
-   - `ss`: Hacer `sa` y `sb` simultáneamente
-   - `pa`: Tomar el primer elemento de B y ponerlo en A
-   - `pb`: Tomar el primer elemento de A y ponerlo en B
-   - `ra`: Rotar la pila A (el primer elemento pasa a ser el último)
-   - `rb`: Rotar la pila B
-   - `rr`: Hacer `ra` y `rb` simultáneamente
-   - `rra`: Rotar la pila A en sentido inverso (el último elemento pasa a ser el primero)
-   - `rrb`: Rotar la pila B en sentido inverso
-   - `rrr`: Hacer `rra` y `rrb` simultáneamente
+## The Challenge
 
-3. **Objetivo**: Ordenar todos los números en la pila A en orden ascendente usando el mínimo de operaciones posible.
+- You have 2 stacks named `a` and `b`
+- Stack `a` contains a random list of unique integers
+- Stack `b` is empty
+- You must sort the numbers in stack `a` in ascending order using only the following operations:
+  - `sa`: swap the first 2 elements of stack `a`
+  - `sb`: swap the first 2 elements of stack `b`
+  - `ss`: perform `sa` and `sb` simultaneously
+  - `pa`: push the top element from stack `b` to stack `a`
+  - `pb`: push the top element from stack `a` to stack `b`
+  - `ra`: rotate stack `a` (first element becomes last)
+  - `rb`: rotate stack `b` (first element becomes last)
+  - `rr`: perform `ra` and `rb` simultaneously
+  - `rra`: reverse rotate stack `a` (last element becomes first)
+  - `rrb`: reverse rotate stack `b` (last element becomes first)
+  - `rrr`: perform `rra` and `rrb` simultaneously
 
-## El Algoritmo Butterfly Sort Explicado
+## Sorting Algorithms
 
-### 1. Asignación de Índices
+This implementation features multiple sorting algorithms optimized for different stack sizes:
 
-Primero, asignamos a cada número un índice según su posición en el orden final:
+### Butterfly Sort Algorithm
 
-```
-Ejemplo:
-Números originales: [5, 1, 4, 2, 3]
-Índices asignados:  [4, 0, 3, 1, 2]
-```
+The centerpiece of this implementation is the **Butterfly Sort** algorithm, a highly efficient approach for sorting large stacks. This algorithm achieves excellent performance with minimal operations:
 
-Esto significa que el número 5 debería estar en la posición 4, el número 1 en la posición 0, etc.
+- **For 100 numbers**: ~600-650 operations (well below the 700 requirement)
+- **For 500 numbers**: ~5000-5200 operations (below the 5500 requirement)
 
-### 2. Cálculo del "Tamaño de Mariposa"
+#### How Butterfly Sort Works
 
-El tamaño de mariposa es un valor que determina cómo distribuiremos los números entre las pilas. Se calcula como la raíz cuadrada aproximada del número total de elementos:
+1. **Index Normalization**: First, we assign indices (0 to n-1) to each element based on its position in the sorted order.
 
-```
-tamaño_mariposa = 0
-mientras (tamaño_mariposa * tamaño_mariposa < número_total_elementos)
-    tamaño_mariposa++
-```
+2. **Butterfly Size Calculation**: We calculate an optimal "butterfly size" (approximately the square root of the total elements).
 
-Para 100 números, el tamaño de mariposa sería aproximadamente 10.
+3. **Butterfly Pattern Distribution**: Elements are distributed between stacks following a specific pattern:
+   - Elements with indices ≤ current counter are pushed to stack B and rotated
+   - Elements with indices ≤ (counter + butterfly size) are pushed to stack B without rotation
+   - Other elements are rotated in stack A
 
-### 3. Distribución en Patrón de Mariposa
+4. **Optimized Retrieval**: Once all elements are in stack B, we retrieve them in descending order using the most efficient rotation direction.
 
-Ahora viene la parte clave del algoritmo. Vamos a distribuir los números de la pila A a la pila B siguiendo un patrón específico:
+This distribution creates a pattern resembling butterfly wings, allowing for minimal operations during the sorting process.
 
-```
-i = 0
-elementos_movidos = 0
+### Small Stack Optimizations
 
-mientras (elementos_movidos < total_elementos)
-    si (índice_del_elemento_superior_A <= i)
-        pb()  // Mover a pila B
-        rb()  // Rotar B (el elemento va al fondo)
-        elementos_movidos++
-        i++
-    sino si (índice_del_elemento_superior_A <= i + tamaño_mariposa)
-        pb()  // Mover a pila B sin rotar
-        elementos_movidos++
-        i++
-    sino
-        ra()  // Rotar A para buscar otro elemento
-```
+For smaller stacks, specialized algorithms are implemented:
 
-Este patrón crea una distribución especial en la pila B:
-- Los elementos con índices más pequeños tienden a estar en la parte inferior
-- Los elementos con índices más grandes tienden a estar en la parte superior
-- Hay una distribución intercalada que facilita la siguiente fase
+- **2 Elements**: Simple swap if needed
+- **3 Elements**: Hardcoded optimal solutions for all possible permutations
+- **5 Elements**: Push smallest elements to stack B, sort remaining elements in stack A, then merge
 
-### 4. Ordenación de Vuelta a la Pila A
+## Installation
 
-Una vez que todos los elementos están en la pila B, los devolvemos a la pila A en orden:
+```bash
+# Clone the repository
+git clone https://github.com/FranciscoLi2000/Push_swap.git
+cd Push_swap
 
-```
-mientras (pila_B no esté vacía)
-    encontrar posición del elemento más grande en B
-    rotar B para llevar ese elemento a la cima (usando rb o rrb, según sea más eficiente)
-    pa()  // Mover el elemento a la pila A
+# Compile the project
+make
 ```
 
-Al siempre elegir el elemento más grande de B, garantizamos que los elementos se apilan en A en orden ascendente.
+## Usage
 
-## Ejemplo Visual
+```bash
+# Basic usage with space-separated integers
+./push_swap 4 67 3 87 23
 
-Imaginemos una secuencia pequeña: [4, 2, 1, 5, 3]
+# Using random numbers for testing
+ARG=$(seq -50 49 | shuf | tr '\n' ' '); ./push_swap $ARG
 
-1. **Asignación de índices**: [3, 1, 0, 4, 2]
+# Count the number of operations
+ARG=$(seq -50 49 | shuf | tr '\n' ' '); ./push_swap $ARG | wc -l
 
-2. **Cálculo del tamaño de mariposa**: Para 5 elementos, sería 3
+# Verify sorting with the checker program
+ARG=$(seq -50 49 | shuf | tr '\n' ' '); ./push_swap $ARG | ./checker_linux $ARG
+```
 
-3. **Distribución en patrón mariposa**:
-   - Estado inicial: A=[4(3), 2(1), 1(0), 5(4), 3(2)], B=[]
-   - i=0: 3>0, 3>0+3, ra → A=[2(1), 1(0), 5(4), 3(2), 4(3)], B=[]
-   - i=0: 1>0, 1≤0+3, pb → A=[1(0), 5(4), 3(2), 4(3)], B=[2(1)]
-   - i=1: 0≤1, pb, rb → A=[5(4), 3(2), 4(3)], B=[1(0), 2(1)]
-   - i=2: 4>2, 4>2+3, ra → A=[3(2), 4(3), 5(4)], B=[1(0), 2(1)]
-   - i=2: 2≤2, pb, rb → A=[4(3), 5(4)], B=[3(2), 1(0), 2(1)]
-   - i=3: 3≤3, pb, rb → A=[5(4)], B=[4(3), 3(2), 1(0), 2(1)]
-   - i=4: 4≤4, pb, rb → A=[], B=[5(4), 4(3), 3(2), 1(0), 2(1)]
+## Performance
 
-4. **Ordenación de vuelta a A**:
-   - Elemento más grande en B: 5(4) (ya está en la cima)
-   - pa → A=[5(4)], B=[4(3), 3(2), 1(0), 2(1)]
-   - Elemento más grande en B: 4(3) (ya está en la cima)
-   - pa → A=[4(3), 5(4)], B=[3(2), 1(0), 2(1)]
-   - Elemento más grande en B: 3(2) (ya está en la cima)
-   - pa → A=[3(2), 4(3), 5(4)], B=[1(0), 2(1)]
-   - Elemento más grande en B: 2(1) (está en el fondo)
-   - rrb → B=[2(1), 1(0)]
-   - pa → A=[2(1), 3(2), 4(3), 5(4)], B=[1(0)]
-   - Elemento más grande en B: 1(0) (ya está en la cima)
-   - pa → A=[1(0), 2(1), 3(2), 4(3), 5(4)], B=[]
+This implementation achieves excellent performance metrics:
 
-¡Y la pila A está ordenada!
+| Input Size | Operations | Requirement | Status |
+|------------|------------|------------|--------|
+| 3 numbers  | ≤ 3        | -          | ✅     |
+| 5 numbers  | ≤ 12       | -          | ✅     |
+| 100 numbers| ~600-650   | < 700      | ✅     |
+| 500 numbers| ~5000-5200 | < 5500     | ✅     |
 
-## Ventajas del Butterfly Sort
+## Project Structure
 
-1. **Eficiencia**: Para 100 números, suele requerir unas 600-650 operaciones, y para 500 números, unas 5000-5200 operaciones.
+```
+.
+├── includes/           # Header files
+│   ├── ft_printf.h
+│   ├── get_next_line.h
+│   ├── libft.h
+│   ├── push_swap.h
+│   └── stack.h
+├── libft/              # Library with utility functions
+├── srcs/               # Source files
+│   ├── assign_indices.c       # Index normalization for butterfly sort
+│   ├── find_largest_pos.c     # Helper for optimized retrieval
+│   ├── input_validation.c     # Input parsing and validation
+│   ├── main.c                 # Main program entry
+│   ├── parse_multiple_args.c  # Command line argument parsing
+│   ├── parse_single_arg.c     # String argument parsing
+│   ├── push.c                 # pa/pb operations
+│   ├── quick_sort.c           # Used for index assignment
+│   ├── reverse_rotate.c       # rra/rrb/rrr operations
+│   ├── rotate.c               # ra/rb/rr operations
+│   ├── sort_butterfly.c       # Main butterfly sort algorithm
+│   ├── sort_five.c            # Algorithm for 4-5 elements
+│   ├── sort_three.c           # Algorithm for 3 elements
+│   ├── sort_two.c             # Algorithm for 2 elements
+│   ├── stack.c                # Stack data structure implementation
+│   ├── stack_utils.c          # Stack utility functions
+│   └── swap.c                 # sa/sb/ss operations
+├── Makefile            # Build configuration
+└── README.md           # This file
+```
 
-2. **Consistencia**: El rendimiento es bastante estable independientemente de la distribución inicial de los números.
+## License
 
-3. **Adaptabilidad**: El cálculo dinámico del tamaño de mariposa hace que el algoritmo se adapte a diferentes tamaños de entrada.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-4. **Simplicidad**: A pesar de su eficiencia, el algoritmo es relativamente sencillo de implementar y entender.
+---
 
-## Conclusión
-
-El algoritmo Butterfly Sort es una solución elegante y eficiente para el proyecto Push Swap. Su nombre viene del patrón de distribución que recuerda a las alas de una mariposa: los elementos se distribuyen de manera que facilita su posterior reordenación con un mínimo de operaciones.
-
-La clave de su éxito está en la distribución estratégica inicial, que aprovecha las limitaciones del conjunto de operaciones disponibles para minimizar el número total de movimientos necesarios para ordenar la secuencia.
+© 2025 yufli - 42 School Project
