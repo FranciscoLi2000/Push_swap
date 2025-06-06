@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_largest_pos.c                                 :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 07:05:31 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 07:06:08 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 01:02:18 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 01:09:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	find_largest_pos(t_stack *b)
+char	*ft_strrev(char *str)
 {
-	t_stack_node	*current;
-	int				largest;
-	int				pos;
-	int				largest_pos;
+	char	tmp;
+	int		len;
+	int		i;
 
-	if (!b || !b->top)
-		return (-1);
-	current = b->top;
-	largest = current->data;
-	pos = 0;
-	largest_pos = 0;
-	while (current)
+	len = 0;
+	while (str[len])
+		len++;
+	i = 0;
+	while (i < len - 1)
 	{
-		if (current->data > largest)
-		{
-			largest = current->data;
-			largest_pos = pos;
-		}
-		current = current->next;
-		pos++;
+		tmp = str[i];
+		str[i] = str[len - 1];
+		str[len - 1] = tmp;
+		len--;
+		i++;
 	}
-	return (largest_pos);
+	return (str);
 }

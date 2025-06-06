@@ -1,41 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_multiple_args.c                              :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 06:43:10 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 06:43:44 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 00:40:31 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 00:40:45 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-t_stack	*parse_multiple_args(int argc, char **argv)
+static int	is_match(char *s1, char *s2)
 {
-	t_stack	*stack;
-	int		i;
-	long	num;
+	int	i;
 
-	stack = stack_init();
-	if (!stack)
-		return (NULL);
-	i = argc;
-	while (--i > 0)
+	i = 0;
+	while (s2[i] != '\0')
 	{
-		if (!is_valid_integer(argv[i], &num))
-		{
-			stack_clear(stack);
-			free(stack);
-			return (NULL);
-		}
-		if (!stack_push(stack, (int)num))
-		{
-			stack_clear(stack);
-			free(stack);
-			return (NULL);
-		}
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
 	}
-	return (stack);
+	return (1);
+}
+
+char	*ft_strstr(char *str, char *to_find)
+{
+	int	i;
+
+	if (*to_find == '\0')
+		return (str);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (is_match(&str[i], to_find))
+			return (&str[i]);
+		i++;
+	}
+	return (0);
 }

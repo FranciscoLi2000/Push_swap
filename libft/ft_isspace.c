@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_int.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 17:26:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 23:36:09 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 01:44:29 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 02:17:00 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	print_int(t_print *tab)
+int	ft_isspace(int c)
 {
-	char	*str;
-	int		num;
-
-	num = va_arg(tab->args, int);
-	str = ft_itoa(num);
-	if (!str)
-		return ;
-	tab->tl += write(1, str, ft_strlen(str));
-	free(str);
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_two.c                                         :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 07:20:37 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 07:21:05 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 00:36:53 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 00:36:56 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	sort_two(t_stack *a)
+char	*ft_strcpy(char *dest, char *src)
 {
-	if (!a || a->size != 2)
-		return ;
-	if (a->top->data > a->top->next->data)
-		sa(a);
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
